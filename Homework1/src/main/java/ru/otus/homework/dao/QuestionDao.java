@@ -5,5 +5,5 @@ import ru.otus.homework.domain.Question;
 import java.util.List;
 
 public interface QuestionDao {
-    List<Question> findAll() throws Exception;
+    List<Question> findAll() throws QuestionReadException;
 }

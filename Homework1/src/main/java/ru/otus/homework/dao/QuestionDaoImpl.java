@@ -16,18 +16,20 @@ public class QuestionDaoImpl implements QuestionDao {
         this.csvPath = csvPath;
     }
 
-    public List<Question> findAll() throws Exception {
-        Reader reader = Files.newBufferedReader(Paths.get(
+    public List<Question> findAll() throws QuestionReadException {
+        try (Reader reader = Files.newBufferedReader(Paths.get(
                 ClassLoader.getSystemResource(csvPath).toURI()));
-        CSVReader csvReader = new CSVReader(reader);
-        List<String[]> list = csvReader.readAll();
-        List<Question> questionList = new ArrayList<Question>();
-        for (String[] strings: list
-             ) {
-            questionList.add(new Question(strings[0], strings[1]));
+             CSVReader csvReader = new CSVReader(reader);){
+            List<String[]> list = csvReader.readAll();
+            List<Question> questionList = new ArrayList<Question>();
+            for (String[] strings : list
+            ) {
+                questionList.add(new Question(strings[0], strings[1]));
+            }
+            return questionList;
         }
-        reader.close();
-        csvReader.close();
-        return questionList;
+        catch(Exception e) {
+            throw new QuestionReadException(e.getMessage());
+        }
     }
 }
