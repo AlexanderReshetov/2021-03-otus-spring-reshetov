@@ -17,4 +17,10 @@ public class Question {
         return answer;
     }
 
+    @Override
+    public boolean equals(Object object) {
+        Question question = (Question) object;
+        return ((this.text.equals(question.text)) && (this.answer.equals(question.answer)));
+    }
+
 }

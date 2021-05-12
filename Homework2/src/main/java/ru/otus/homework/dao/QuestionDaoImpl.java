@@ -1,6 +1,9 @@
 package ru.otus.homework.dao;
 
 import com.opencsv.CSVReader;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
 import ru.otus.homework.domain.Question;
 
 import java.io.Reader;
@@ -9,10 +12,12 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+@PropertySource("classpath:application.properties")
+@Component
 public class QuestionDaoImpl implements QuestionDao {
     private final String csvPath;
 
-    public QuestionDaoImpl(String csvPath) {
+    public QuestionDaoImpl(@Value("${question.path}") String csvPath) {
         this.csvPath = csvPath;
     }
 
@@ -29,7 +34,7 @@ public class QuestionDaoImpl implements QuestionDao {
             return questionList;
         }
         catch(Exception e) {
-            throw new QuestionReadException(e.getMessage());
+            throw new QuestionReadException("Question file reading error!", e);
         }
     }
 }

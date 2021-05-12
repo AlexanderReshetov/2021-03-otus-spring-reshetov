@@ -3,52 +3,31 @@ package ru.otus.homework.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import ru.otus.homework.dao.TestRunnerIOException;
-import ru.otus.homework.dao.QuestionDao;
-import ru.otus.homework.dao.QuestionReadException;
 import ru.otus.homework.domain.Person;
-import ru.otus.homework.domain.Question;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.List;
 
 @Service
 public class TestRunnerServiceImpl implements TestRunnerService{
-    private final QuestionDao questionDao;
-
-    @Value("${question.credit.count}")
-    private int questionCreditCount;
+    private final int questionCreditCount;
+    private final PersonInputDataService personInputDataService;
+    private final TestService testService;
+    private final OutputDataService outputDataService;
 
     @Autowired
-    public TestRunnerServiceImpl(QuestionDao questionDao) {
-        this.questionDao = questionDao;
+    public TestRunnerServiceImpl(@Value("${question.credit.count}") int questionCreditCount, PersonInputDataService personInputDataService, OutputDataService outputDataService, TestService testService) {
+        this.questionCreditCount = questionCreditCount;
+        this.personInputDataService = personInputDataService;
+        this.outputDataService = outputDataService;
+        this.testService = testService;
     }
 
-    public void run() throws QuestionReadException, TestRunnerIOException {
-        try(BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
-            System.out.print("Your surname: ");
-            Person person = new Person(reader.readLine());
-            System.out.print("Your name: ");
-            person.setName(reader.readLine());
-            int countCorrectAnswers = 0;
-            List<Question> questionList = questionDao.findAll();
-            for (Question question: questionList
-            ) {
-                System.out.println("Question: " + question.getText());
-                System.out.print("Answer: ");
-                String answer = reader.readLine();
-                if (answer.equals(question.getAnswer())) { countCorrectAnswers++; }
-            }
-            System.out.println("You are known as " + person.getName() + " " + person.getSurname() + ".");
-            System.out.println("You gave " + countCorrectAnswers + " correct answers for 5 questions.");
-            System.out.println("You need " + questionCreditCount + " correct answers to get a credit.");
-            if (countCorrectAnswers >= questionCreditCount) { System.out.println("Congratulations! You get a credit!"); }
-            else { System.out.println("Don't be upset, but you didn't get a credit :("); }
+    public void run() throws TestRunnerException {
+        try {
+            Person person = personInputDataService.inputData();
+            int countCorrectAnswers = testService.Test();
+            outputDataService.outputData(person, countCorrectAnswers, questionCreditCount);
         }
-        catch(IOException e) {
-            throw new TestRunnerIOException(e.getMessage());
+        catch(Exception e) {
+            throw new TestRunnerException("Testing error!", e);
         }
 
     }
