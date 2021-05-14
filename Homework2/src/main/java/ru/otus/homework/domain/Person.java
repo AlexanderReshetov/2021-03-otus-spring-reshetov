@@ -1,14 +1,8 @@
 package ru.otus.homework.domain;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class Person {
-    private String surname;
+    private final String surname;
     private String name;
-
-    public Person() {
-    }
 
     public Person(String surname) {
         this.surname = surname;
@@ -25,10 +19,6 @@ public class Person {
 
     public String getName() {
         return name;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
     }
 
     public void setName(String name) {

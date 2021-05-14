@@ -1,5 +1,8 @@
 package ru.otus.homework.service;
 
+import ru.otus.homework.domain.Person;
+import ru.otus.homework.domain.TestResult;
+
 public interface TestService {
-    public int Test() throws TestServiceException;
+    TestResult test(Person person, int questionCreditCount) throws TestServiceException;
 }

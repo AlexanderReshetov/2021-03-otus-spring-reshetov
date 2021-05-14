@@ -5,20 +5,18 @@ import org.springframework.stereotype.Service;
 import ru.otus.homework.domain.Person;
 
 @Service
-public class PersonInputDataServiceImpl implements PersonInputDataService{
-    private final Person person;
+public class PersonInputDataServiceImpl implements PersonInputDataService {
     private final IOService ioservice;
 
     @Autowired
-    public PersonInputDataServiceImpl(Person person, IOService ioservice) {
-        this.person = person;
+    public PersonInputDataServiceImpl(IOService ioservice) {
         this.ioservice = ioservice;
     }
 
     public Person inputData() throws PersonInputDataException{
         try {
             ioservice.print("Your surname: ");
-            Person person = new Person(ioservice.readLine());
+            final Person person = new Person(ioservice.readLine());
             ioservice.print("Your name: ");
             person.setName(ioservice.readLine());
             return person;
