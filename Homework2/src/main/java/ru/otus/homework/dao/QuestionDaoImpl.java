@@ -27,8 +27,7 @@ public class QuestionDaoImpl implements QuestionDao {
              CSVReader csvReader = new CSVReader(reader);){
             List<String[]> list = csvReader.readAll();
             List<Question> questionList = new ArrayList<Question>();
-            for (String[] strings : list
-            ) {
+            for (String[] strings : list) {
                 questionList.add(new Question(strings[0], strings[1]));
             }
             return questionList;
