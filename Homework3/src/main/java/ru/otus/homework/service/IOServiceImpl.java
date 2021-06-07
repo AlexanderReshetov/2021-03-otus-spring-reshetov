@@ -19,7 +19,8 @@ public class IOServiceImpl implements IOService {
     }
 
     public IOServiceImpl(BufferedReader reader,
-                         @Value("#{ T(java.lang.System).out}") PrintStream out) {
+                         @Value("#{ T(java.lang.System).out}") PrintStream out,
+                         @Value("#{ T(java.lang.System).in}") InputStream in) {
         this.out = out;
         this.reader = reader;
     }

@@ -57,15 +57,15 @@ public class TestServiceImplTest {
         assertThrows(TestServiceException.class, () -> testService.test(person, QUESTION_CREDIT_COUNT));
     }
 
-    Person person() {
+    private Person person() {
         return new Person("TestSurname", "TestName");
     }
 
-    Question question() {
+    private Question question() {
         return new Question("Text", TEST_ANSWER);
     }
 
-    List<Question> questionList() {
+    private List<Question> questionList() {
         List<Question> questionList = new ArrayList<Question>();
         questionList.add(question());
         return questionList;

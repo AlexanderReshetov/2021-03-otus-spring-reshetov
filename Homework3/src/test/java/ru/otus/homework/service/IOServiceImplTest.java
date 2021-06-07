@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -22,15 +23,10 @@ public class IOServiceImplTest {
     private PrintStream printStream;
     @Mock
     private BufferedReader reader;
-
-    private IOService ioService;
+    @InjectMocks
+    private IOServiceImpl ioService;
 
     private static final String TEST_STRING = "TestString";
-
-    @BeforeEach
-    void setUp() {
-        ioService = new IOServiceImpl(reader, printStream);
-    }
 
     @Test
     @DisplayName("вывести строку с переводом строки на консоль")

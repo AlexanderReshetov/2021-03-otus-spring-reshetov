@@ -41,7 +41,7 @@ public class TestResultOutputServiceImplTest {
         verify(ioService).println("Don't be upset, but you didn't get a credit :(");
     }
 
-    Person person() {
+    private Person person() {
         return new Person("TestSurname", "TestName");
     }
 

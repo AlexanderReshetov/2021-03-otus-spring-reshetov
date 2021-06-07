@@ -72,7 +72,7 @@ public class TestRunnerServiceImplTest {
         assertThrows(TestRunnerException.class, () -> testRunnerService.run());
     }
 
-    Person person() {
+    private Person person() {
         return new Person("TestSurname", "TestName");
     }
 }
