@@ -10,6 +10,9 @@ import ru.otus.homework.dao.QuestionDao;
 import ru.otus.homework.domain.Person;
 import ru.otus.homework.domain.Question;
 import ru.otus.homework.domain.TestResult;
+import ru.otus.homework.service.exception.IOServiceException;
+import ru.otus.homework.service.exception.MessageSourceIOServiceException;
+import ru.otus.homework.service.exception.TestServiceException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +27,8 @@ public class TestServiceImplTest {
     @Mock
     private QuestionDao questionDao;
     @Mock
+    private MessageSourceIOService messageSourceIOService;
+    @Mock
     private IOService ioService;
     @InjectMocks
     private TestServiceImpl testService;
@@ -33,11 +38,11 @@ public class TestServiceImplTest {
 
     @Test
     @DisplayName("получить результаты теста")
-    void shouldGetTestResult() throws IOServiceException, TestServiceException {
+    void shouldGetTestResult() throws MessageSourceIOServiceException, TestServiceException {
         final Person person = person();
         final List<Question> questionList = questionList();
         given(questionDao.findAll()).willReturn(questionList);
-        given(ioService.readLine()).willReturn(TEST_ANSWER);
+        given(messageSourceIOService.readLine()).willReturn(TEST_ANSWER);
 
         TestResult testResult = testService.test(person, QUESTION_CREDIT_COUNT);
 
@@ -48,11 +53,11 @@ public class TestServiceImplTest {
 
     @Test
     @DisplayName("выбросить TestServiceException при ошибке")
-    void shouldThrowExceptionWhenError() throws IOServiceException, TestServiceException {
+    void shouldThrowExceptionWhenError() throws MessageSourceIOServiceException, TestServiceException {
         final Person person = person();
         final List<Question> questionList = questionList();
         given(questionDao.findAll()).willReturn(questionList);
-        given(ioService.readLine()).willThrow(IOServiceException.class);
+        given(messageSourceIOService.readLine()).willThrow(MessageSourceIOServiceException.class);
 
         assertThrows(TestServiceException.class, () -> testService.test(person, QUESTION_CREDIT_COUNT));
     }

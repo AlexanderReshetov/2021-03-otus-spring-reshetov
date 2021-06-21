@@ -3,6 +3,7 @@ package ru.otus.homework.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import ru.otus.homework.service.exception.IOServiceException;
 
 import java.io.*;
 
@@ -18,11 +19,8 @@ public class IOServiceImpl implements IOService {
         this.reader = new BufferedReader(new InputStreamReader(in));
     }
 
-    public IOServiceImpl(BufferedReader reader,
-                         @Value("#{ T(java.lang.System).out}") PrintStream out,
-                         @Value("#{ T(java.lang.System).in}") InputStream in) {
-        this.out = out;
-        this.reader = reader;
+    public BufferedReader getReader() {
+        return reader;
     }
 
     @Override
@@ -38,7 +36,7 @@ public class IOServiceImpl implements IOService {
     @Override
     public String readLine() throws IOServiceException {
         try {
-            return reader.readLine();
+            return getReader().readLine();
         }
         catch (IOException e) {
             throw new IOServiceException("Data input error!", e);

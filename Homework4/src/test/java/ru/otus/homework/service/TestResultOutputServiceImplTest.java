@@ -18,9 +18,7 @@ import static org.mockito.Mockito.verify;
 @DisplayName("Сервис вывода информации о результатах тестирования TestResultOutputServiceImpl должен")
 public class TestResultOutputServiceImplTest {
     @Mock
-    private IOService ioService;
-    @Mock
-    private MessageSourceService messageSourceService;
+    private MessageSourceIOService messageSourceIOService;
     @InjectMocks
     private TestResultOutputServiceImpl testResultOutputService;
 
@@ -28,30 +26,24 @@ public class TestResultOutputServiceImplTest {
     @DisplayName("вывести информацию об успешном прохождении теста")
     void shouldOutputSuccessTestResult () {
         final String congratulationName = "message.output.congratulation";
-        final String congratulationText = "Congratulations! You get a credit!";
         final Person person = person();
         final TestResult testResult = new TestResult(person, 5, 5, 5);
-        given(messageSourceService.getMessage(not(eq(congratulationName)), any())).willReturn("");
-        given(messageSourceService.getMessage(congratulationName, null)).willReturn(congratulationText);
 
         testResultOutputService.output(testResult);
 
-        verify(ioService).println(congratulationText);
+        verify(messageSourceIOService).println(congratulationName, null);
     }
 
     @Test
     @DisplayName("вывести информацию о неудачном прохождении теста")
     void shouldOutputFailureTestResult () {
         final String comfortName = "message.output.comfort";
-        final String comfortText = "Don't be upset, but you didn't get a credit :(";
         final Person person = person();
         final TestResult testResult = new TestResult(person, 5, 4, 5);
-        given(messageSourceService.getMessage(not(eq(comfortName)), any())).willReturn("");
-        given(messageSourceService.getMessage(comfortName, null)).willReturn(comfortText);
 
         testResultOutputService.output(testResult);
 
-        verify(ioService).println(comfortText);
+        verify(messageSourceIOService).println(comfortName, null);
     }
 
     private Person person() {

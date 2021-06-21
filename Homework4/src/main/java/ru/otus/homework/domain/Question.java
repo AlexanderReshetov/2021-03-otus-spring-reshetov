@@ -20,7 +20,7 @@ public class Question {
     @Override
     public boolean equals(Object object) {
         Question question = (Question) object;
-        return ((this.text.equals(question.text)) && (this.answer.equals(question.answer)));
+        return ((text.equals(question.text)) && (answer.equals(question.answer)));
     }
 
 }

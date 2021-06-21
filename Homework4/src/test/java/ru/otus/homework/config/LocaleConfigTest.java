@@ -19,4 +19,15 @@ public class LocaleConfigTest {
 
         assertEquals(localeConfig.getName(), testName);
     }
+
+    @Test
+    @DisplayName("корректно создать локаль")
+    public void shouldCreateLocale() {
+        final String testName = "ru";
+        localeConfig = new LocaleConfig();
+
+        localeConfig.setName(testName);
+
+        assertEquals(localeConfig.getLocale().getLanguage(), testName);
+    }
 }

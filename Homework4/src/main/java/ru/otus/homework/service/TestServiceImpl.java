@@ -6,37 +6,39 @@ import ru.otus.homework.dao.QuestionDao;
 import ru.otus.homework.domain.Person;
 import ru.otus.homework.domain.Question;
 import ru.otus.homework.domain.TestResult;
+import ru.otus.homework.service.exception.MessageSourceIOServiceException;
+import ru.otus.homework.service.exception.TestServiceException;
 
 import java.util.List;
 
 @Service
 public class TestServiceImpl implements TestService {
     private final QuestionDao questionDao;
-    private final IOService ioservice;
+    private final MessageSourceIOService messageSourceIOService;
+    private final IOService ioService;
 
     @Autowired
-    public TestServiceImpl(QuestionDao questionDao, IOService ioservice) {
+    public TestServiceImpl(QuestionDao questionDao, MessageSourceIOService messageSourceIOService, IOService ioService) {
         this.questionDao = questionDao;
-        this.ioservice = ioservice;
+        this.messageSourceIOService = messageSourceIOService;
+        this.ioService = ioService;
     }
 
     public TestResult test(Person person, int questionCreditCount) throws TestServiceException {
         int countCorrectAnswers = 0;
         int countQuestions = 0;
-        String answer = "";
         final List<Question> questionList = questionDao.findAll();
-        for (Question question: questionList
-        ) {
+        for (Question question: questionList) {
             countQuestions++;
-            ioservice.println("Question: " + question.getText());
-            ioservice.print("Answer: ");
+            messageSourceIOService.print("message.output.question.caption", null);
+            ioService.println(question.getText());
+            messageSourceIOService.print("message.output.answer.caption", null);
             try {
-                answer = ioservice.readLine();
-                if (answer.equals(question.getAnswer())) {
+                if (messageSourceIOService.readLine().equals(question.getAnswer())) {
                     countCorrectAnswers++;
                 }
             }
-            catch(IOServiceException e) {
+            catch(MessageSourceIOServiceException e) {
                 throw new TestServiceException("Answering error!", e);
             }
 

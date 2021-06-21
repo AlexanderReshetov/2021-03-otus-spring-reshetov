@@ -1,5 +1,6 @@
 package ru.otus.homework.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -8,8 +9,11 @@ import org.springframework.stereotype.Component;
 public class QuestionConfig {
     private File file;
     private Credit credit;
+    private LocaleConfig localeConfig;
 
-    public QuestionConfig() {
+    @Autowired
+    public QuestionConfig(LocaleConfig localeConfig) {
+        this.localeConfig = localeConfig;
     }
 
     public File getFile() {
@@ -64,6 +68,15 @@ public class QuestionConfig {
 
         public void setCount(int count) {
             this.count = count;
+        }
+    }
+
+    public String getLocalizedFileName() {
+        if (localeConfig.getName().equals("")) {
+            return getFile().getName() + "." + getFile().getExtension();
+        }
+        else {
+            return getFile().getName() + "_" + localeConfig.getName() + "." + getFile().getExtension();
         }
     }
 }

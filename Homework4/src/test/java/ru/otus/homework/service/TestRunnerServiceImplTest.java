@@ -6,17 +6,18 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.ApplicationRunner;
 import ru.otus.homework.config.QuestionConfig;
 import ru.otus.homework.domain.Person;
 import ru.otus.homework.domain.TestResult;
+import ru.otus.homework.service.exception.PersonInputDataException;
+import ru.otus.homework.service.exception.TestRunnerException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("Сервис запуска тестирования TestRunnerServiceImpl при запуске приложения должен")
+@DisplayName("Сервис запуска тестирования TestRunnerServiceImpl должен")
 public class TestRunnerServiceImplTest {
     @Mock
     private PersonInputDataService personInputDataService;
@@ -29,7 +30,7 @@ public class TestRunnerServiceImplTest {
     @Mock
     private QuestionConfig.Credit credit;
 
-    private ApplicationRunner applicationRunner;
+    private TestRunnerServiceImpl testRunnerService;
 
     private static final int QUESTION_CREDIT_COUNT = 5;
 
@@ -37,13 +38,14 @@ public class TestRunnerServiceImplTest {
     void setUp() {
         given(questionConfig.getCredit()).willReturn(credit);
         given(credit.getCount()).willReturn(QUESTION_CREDIT_COUNT);
-        applicationRunner = new TestRunnerServiceImpl(questionConfig, personInputDataService, testResultOutputService, testService);
+        testRunnerService = new TestRunnerServiceImpl(questionConfig, personInputDataService, testResultOutputService, testService);
     }
+
 
     @Test
     @DisplayName("получить данные пользователя")
     void shouldInputPersonData() throws Exception {
-        applicationRunner.run(null);
+        testRunnerService.run();
 
         verify(personInputDataService).inputData();
     }
@@ -54,7 +56,7 @@ public class TestRunnerServiceImplTest {
         final Person person = person();
         given(personInputDataService.inputData()).willReturn(person);
 
-        applicationRunner.run(null);
+        testRunnerService.run();
 
         verify(testService).test(person, QUESTION_CREDIT_COUNT);
     }
@@ -67,7 +69,7 @@ public class TestRunnerServiceImplTest {
         given(personInputDataService.inputData()).willReturn(person);
         given(testService.test(person, QUESTION_CREDIT_COUNT)).willReturn(testResult);
 
-        applicationRunner.run(null);
+        testRunnerService.run();
 
         verify(testResultOutputService).output(testResult);
     }
@@ -77,7 +79,7 @@ public class TestRunnerServiceImplTest {
     void shouldThrowExceptionWhenError() throws Exception {
         given(personInputDataService.inputData()).willThrow(PersonInputDataException.class);
 
-        assertThrows(TestRunnerException.class, () -> applicationRunner.run(null));
+        assertThrows(TestRunnerException.class, () -> testRunnerService.run());
     }
 
     private Person person() {

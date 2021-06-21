@@ -7,6 +7,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.otus.homework.domain.Person;
+import ru.otus.homework.service.exception.IOServiceException;
+import ru.otus.homework.service.exception.MessageSourceIOServiceException;
+import ru.otus.homework.service.exception.PersonInputDataException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -16,9 +19,7 @@ import static org.mockito.BDDMockito.given;
 @DisplayName("Сервис заполнения личных данных пользователя PersonInputDataServiceImpl должен")
 public class PersonInputDataServiceImplTest {
     @Mock
-    private IOService ioService;
-    @Mock
-    private MessageSourceService messageSourceService;
+    private MessageSourceIOService messageSourceIOService;
     @InjectMocks
     private PersonInputDataServiceImpl personInputDataService;
 
@@ -26,8 +27,8 @@ public class PersonInputDataServiceImplTest {
 
     @Test
     @DisplayName("корректно считать фамилию и имя пользователя")
-    void shouldCorrectInputData() throws IOServiceException, PersonInputDataException {
-        given(ioService.readLine()).willReturn(TEST_LINE);
+    void shouldCorrectInputData() throws MessageSourceIOServiceException, PersonInputDataException {
+        given(messageSourceIOService.readLine()).willReturn(TEST_LINE);
 
         Person person = personInputDataService.inputData();
 
@@ -37,8 +38,8 @@ public class PersonInputDataServiceImplTest {
 
     @Test
     @DisplayName("выбросить PersonInputDataException, если считать личные данные пользователя не удалось")
-    void shouldThrowExceptionWhenIncorrectInputData() throws IOServiceException, PersonInputDataException {
-        given(ioService.readLine()).willThrow(IOServiceException.class);
+    void shouldThrowExceptionWhenIncorrectInputData() throws MessageSourceIOServiceException, PersonInputDataException {
+        given(messageSourceIOService.readLine()).willThrow(MessageSourceIOServiceException.class);
 
         assertThrows(PersonInputDataException.class, () -> personInputDataService.inputData());
     }

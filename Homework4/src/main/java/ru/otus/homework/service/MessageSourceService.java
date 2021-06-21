@@ -1,5 +1,5 @@
 package ru.otus.homework.service;
 
 public interface MessageSourceService {
-    String getMessage(String name, Object[] args);
+    String getMessage(String name, Object...varArgs);
 }

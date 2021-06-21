@@ -2,9 +2,9 @@ package ru.otus.homework.dao;
 
 import com.opencsv.CSVReader;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import ru.otus.homework.config.LocaleConfig;
+import org.springframework.stereotype.Repository;
 import ru.otus.homework.config.QuestionConfig;
+import ru.otus.homework.dao.exception.QuestionReadException;
 import ru.otus.homework.domain.Question;
 
 import java.io.Reader;
@@ -13,18 +13,13 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
-public class QuestionDaoImpl implements QuestionDao {
+@Repository
+public class QuestionDaoCsv implements QuestionDao {
     private final String csvPath;
 
     @Autowired
-    public QuestionDaoImpl(QuestionConfig questionConfig, LocaleConfig localeConfig) {
-        if (localeConfig.getName().equals("")) {
-            this.csvPath = questionConfig.getFile().getName() + "." + questionConfig.getFile().getExtension();
-        }
-        else {
-            this.csvPath = questionConfig.getFile().getName() + "_" + localeConfig.getName() + "." + questionConfig.getFile().getExtension();
-        }
+    public QuestionDaoCsv(QuestionConfig questionConfig) {
+        this.csvPath = questionConfig.getLocalizedFileName();
     }
 
     public List<Question> findAll() throws QuestionReadException {

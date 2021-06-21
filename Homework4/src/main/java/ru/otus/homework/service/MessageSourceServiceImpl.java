@@ -5,20 +5,18 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import ru.otus.homework.config.LocaleConfig;
 
-import java.util.Locale;
-
 @Service
 public class MessageSourceServiceImpl implements MessageSourceService{
     private final MessageSource messageSource;
-    private final Locale locale;
+    private final LocaleConfig localeConfig;
 
     @Autowired
     MessageSourceServiceImpl(MessageSource messageSource, LocaleConfig localeConfig) {
         this.messageSource = messageSource;
-        this.locale = new Locale(localeConfig.getName());
+        this.localeConfig = localeConfig;
     }
 
-    public String getMessage(String name, Object[] args) {
-        return messageSource.getMessage(name, args, locale);
+    public String getMessage(String name, Object...varArgs) {
+        return messageSource.getMessage(name, varArgs, localeConfig.getLocale());
     }
 }
