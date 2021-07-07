@@ -18,9 +18,9 @@ public class PersonInputDataServiceImpl implements PersonInputDataService {
 
     public Person inputData() throws PersonInputDataException {
         try {
-            messageSourceIOService.print("message.input.surname", null);
+            messageSourceIOService.print("message.input.surname");
             final Person person = new Person(messageSourceIOService.readLine());
-            messageSourceIOService.print("message.input.name", null);
+            messageSourceIOService.print("message.input.name");
             person.setName(messageSourceIOService.readLine());
             return person;
         }

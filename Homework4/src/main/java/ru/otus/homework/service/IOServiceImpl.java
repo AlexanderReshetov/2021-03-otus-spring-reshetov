@@ -34,7 +34,7 @@ public class IOServiceImpl implements IOService {
     }
 
     @Override
-    public String readLine() throws IOServiceException {
+    public String readLine() {
         try {
             return getReader().readLine();
         }

@@ -15,16 +15,16 @@ public class TestResultOutputServiceImpl implements TestResultOutputService {
 
     public void output(TestResult testResult) {
         messageSourceIOService.println("message.output.person",
-                new Object[]{testResult.getPerson().getName(), testResult.getPerson().getSurname()});
+                testResult.getPerson().getName(), testResult.getPerson().getSurname());
         messageSourceIOService.println("message.output.answer.correct.count",
-                new Object[]{testResult.getCountCorrectAnswers(), testResult.getCountQuestions()});
+                testResult.getCountCorrectAnswers(), testResult.getCountQuestions());
         messageSourceIOService.println("message.output.answer.credit.count",
-                new Object[]{testResult.getQuestionCreditCount()});
+                testResult.getQuestionCreditCount());
         if (testResult.getCountCorrectAnswers() >= testResult.getQuestionCreditCount()) {
-            messageSourceIOService.println("message.output.congratulation", null);
+            messageSourceIOService.println("message.output.congratulation");
         }
         else {
-            messageSourceIOService.println("message.output.comfort", null);
+            messageSourceIOService.println("message.output.comfort");
         }
     }
 }

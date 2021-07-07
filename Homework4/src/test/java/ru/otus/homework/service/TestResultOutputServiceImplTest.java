@@ -9,9 +9,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.otus.homework.domain.Person;
 import ru.otus.homework.domain.TestResult;
 
-import static org.mockito.AdditionalMatchers.not;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -31,7 +28,7 @@ public class TestResultOutputServiceImplTest {
 
         testResultOutputService.output(testResult);
 
-        verify(messageSourceIOService).println(congratulationName, null);
+        verify(messageSourceIOService).println(congratulationName);
     }
 
     @Test
@@ -43,7 +40,7 @@ public class TestResultOutputServiceImplTest {
 
         testResultOutputService.output(testResult);
 
-        verify(messageSourceIOService).println(comfortName, null);
+        verify(messageSourceIOService).println(comfortName);
     }
 
     private Person person() {

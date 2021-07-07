@@ -50,7 +50,7 @@ public class IOServiceImplTest {
 
     @Test
     @DisplayName("прочесть строку с консоли")
-    void shouldCorrectReadLine() throws IOException, IOServiceException {
+    void shouldCorrectReadLine() throws IOException {
         IOServiceImpl ioServiceSpy = spy(ioService);
         given(ioServiceSpy.getReader()).willReturn(reader);
         ioServiceSpy.readLine();
@@ -60,7 +60,7 @@ public class IOServiceImplTest {
 
     @Test
     @DisplayName("выбросить IOServiceException, если прочесть строку с консоли не удалось")
-    void shouldThrowExceptionWhenIncorrectReadLine() throws IOException, IOServiceException{
+    void shouldThrowExceptionWhenIncorrectReadLine() throws IOException {
         IOServiceImpl ioServiceSpy = spy(ioService);
         given(ioServiceSpy.getReader()).willReturn(reader);
         given(reader.readLine()).willThrow(IOException.class);

@@ -10,9 +10,7 @@ import ru.otus.homework.config.QuestionConfig;
 import ru.otus.homework.domain.Person;
 import ru.otus.homework.domain.TestResult;
 import ru.otus.homework.service.exception.PersonInputDataException;
-import ru.otus.homework.service.exception.TestRunnerException;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
@@ -26,6 +24,8 @@ public class TestRunnerServiceImplTest {
     @Mock
     private TestService testService;
     @Mock
+    private MessageSourceIOService messageSourceIOService;
+    @Mock
     private QuestionConfig questionConfig;
     @Mock
     private QuestionConfig.Credit credit;
@@ -38,7 +38,7 @@ public class TestRunnerServiceImplTest {
     void setUp() {
         given(questionConfig.getCredit()).willReturn(credit);
         given(credit.getCount()).willReturn(QUESTION_CREDIT_COUNT);
-        testRunnerService = new TestRunnerServiceImpl(questionConfig, personInputDataService, testResultOutputService, testService);
+        testRunnerService = new TestRunnerServiceImpl(questionConfig, personInputDataService, testResultOutputService, testService, messageSourceIOService);
     }
 
 
@@ -75,11 +75,13 @@ public class TestRunnerServiceImplTest {
     }
 
     @Test
-    @DisplayName("выбросить TestRunnerException при ошибке")
-    void shouldThrowExceptionWhenError() throws Exception {
+    @DisplayName("вывести сообщение при ошибке")
+    void shouldThrowExceptionWhenError() throws PersonInputDataException {
         given(personInputDataService.inputData()).willThrow(PersonInputDataException.class);
 
-        assertThrows(TestRunnerException.class, () -> testRunnerService.run());
+        testRunnerService.run();
+
+        verify(messageSourceIOService).println("message.output.error");
     }
 
     private Person person() {

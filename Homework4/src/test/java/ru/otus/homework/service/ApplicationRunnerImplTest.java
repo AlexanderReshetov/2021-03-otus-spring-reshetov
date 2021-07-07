@@ -6,7 +6,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.otus.homework.service.exception.TestRunnerException;
 
 import static org.mockito.Mockito.verify;
 
@@ -16,11 +15,11 @@ public class ApplicationRunnerImplTest {
     @Mock
     private TestRunnerService testRunnerService;
     @InjectMocks
-    ApplicationRunnerServiceImpl applicationRunnerService;
+    TestApplicationRunner applicationRunnerService;
 
     @DisplayName("запустить сервис запуска тестирования TestRunnerService")
     @Test
-    public void shouldExecuteTestRunnerService() throws TestRunnerException {
+    public void shouldExecuteTestRunnerService() {
         applicationRunnerService.run(null);
 
         verify(testRunnerService).run();

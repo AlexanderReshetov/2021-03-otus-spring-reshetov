@@ -7,9 +7,9 @@ import ru.otus.homework.config.QuestionConfig;
 import ru.otus.homework.dao.exception.QuestionReadException;
 import ru.otus.homework.domain.Question;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +23,7 @@ public class QuestionDaoCsv implements QuestionDao {
     }
 
     public List<Question> findAll() throws QuestionReadException {
-        try (Reader reader = Files.newBufferedReader(Paths.get(
-                ClassLoader.getSystemResource(csvPath).toURI()));
+        try (Reader reader = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("/" + csvPath)));
              CSVReader csvReader = new CSVReader(reader);){
             List<String[]> list = csvReader.readAll();
             List<Question> questionList = new ArrayList<Question>();

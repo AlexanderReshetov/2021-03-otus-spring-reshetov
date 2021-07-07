@@ -2,12 +2,13 @@ package ru.otus.homework;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import ru.otus.homework.service.exception.TestRunnerException;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 @SpringBootApplication
+@ConfigurationPropertiesScan
 public class Main {
 
-	public static void main(String[] args) throws TestRunnerException {
+	public static void main(String[] args) {
 		SpringApplication.run(Main.class, args);
 	}
 

@@ -3,7 +3,6 @@ package ru.otus.homework.config;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -15,8 +14,6 @@ import static org.mockito.BDDMockito.given;
 public class QuestionConfigTest {
     @Mock
     private LocaleConfig localeConfig;
-    @InjectMocks
-    private QuestionConfig questionConfig;
 
     @Test
     @DisplayName("корректно установить имя и расширение файла")
@@ -27,7 +24,7 @@ public class QuestionConfigTest {
 
         file.setName(fileName);
         file.setExtension(fileExtension);
-        questionConfig.setFile(file);
+        QuestionConfig questionConfig = new QuestionConfig(file, null);
 
         assertEquals(questionConfig.getFile().getName(), fileName);
         assertEquals(questionConfig.getFile().getExtension(), fileExtension);
@@ -43,7 +40,8 @@ public class QuestionConfigTest {
 
         file.setName(fileName);
         file.setExtension(fileExtension);
-        questionConfig.setFile(file);
+        QuestionConfig questionConfig = new QuestionConfig(file, null);
+        questionConfig.setLocaleConfig(localeConfig);
         given(localeConfig.getName()).willReturn(localeName);
 
         assertEquals(questionConfig.getLocalizedFileName(), fileName + "_" + localeName + "." + fileExtension);
@@ -56,8 +54,9 @@ public class QuestionConfigTest {
         final QuestionConfig.Credit credit = new QuestionConfig.Credit();
 
         credit.setCount(creditCount);
-        questionConfig.setCredit(credit);
+        QuestionConfig questionConfig = new QuestionConfig(null, credit);
 
         assertEquals(questionConfig.getCredit().getCount(), creditCount);
     }
+
 }

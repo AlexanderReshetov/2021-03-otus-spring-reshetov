@@ -2,34 +2,32 @@ package ru.otus.homework.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.context.properties.ConstructorBinding;
 
 @ConfigurationProperties(prefix = "question")
-@Component
+@ConstructorBinding
 public class QuestionConfig {
-    private File file;
-    private Credit credit;
+    private final File file;
+    private final Credit credit;
+
     private LocaleConfig localeConfig;
 
-    @Autowired
-    public QuestionConfig(LocaleConfig localeConfig) {
-        this.localeConfig = localeConfig;
+    public QuestionConfig(File file, Credit credit) {
+        this.file = file;
+        this.credit = credit;
     }
 
     public File getFile() {
         return file;
     }
 
-    public void setFile(File file) {
-        this.file = file;
-    }
-
     public Credit getCredit() {
         return credit;
     }
 
-    public void setCredit(Credit credit) {
-        this.credit = credit;
+    @Autowired
+    public void setLocaleConfig(LocaleConfig localeConfig) {
+        this.localeConfig = localeConfig;
     }
 
     public static class File {

@@ -30,9 +30,9 @@ public class TestServiceImpl implements TestService {
         final List<Question> questionList = questionDao.findAll();
         for (Question question: questionList) {
             countQuestions++;
-            messageSourceIOService.print("message.output.question.caption", null);
+            messageSourceIOService.print("message.output.question.caption");
             ioService.println(question.getText());
-            messageSourceIOService.print("message.output.answer.caption", null);
+            messageSourceIOService.print("message.output.answer.caption");
             try {
                 if (messageSourceIOService.readLine().equals(question.getAnswer())) {
                     countCorrectAnswers++;
