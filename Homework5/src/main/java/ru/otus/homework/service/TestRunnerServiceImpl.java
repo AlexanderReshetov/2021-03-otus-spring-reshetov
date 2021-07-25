@@ -31,13 +31,24 @@ public class TestRunnerServiceImpl implements TestRunnerService {
 
     public void run() {
         try {
-            final Person person = personInputDataService.inputData();
+            testAndOutput(personInputDataService.inputData());
+        }
+        catch(PersonInputDataException e) {
+            messageSourceIOService.println("message.output.error");
+        }
+    }
+
+    public void run(String surname, String name) {
+        testAndOutput(new Person(surname, name));
+    }
+
+    private void testAndOutput(Person person) {
+        try {
             final TestResult testResult = testService.test(person, questionCreditCount);
             testResultOutputService.output(testResult);
         }
-        catch(PersonInputDataException | TestServiceException e) {
+        catch(TestServiceException e) {
             messageSourceIOService.println("message.output.error");
         }
-
     }
 }

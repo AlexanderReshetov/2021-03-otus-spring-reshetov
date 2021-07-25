@@ -27,7 +27,7 @@ public class MessageSourceIOServiceImpl implements MessageSourceIOService {
     }
 
     public void println(String name) {
-        ioService.print(messageSourceService.getMessage(name, null));
+        ioService.println(messageSourceService.getMessage(name, null));
     }
 
     public String readLine() throws MessageSourceIOServiceException {

@@ -7,6 +7,7 @@ import ru.otus.homework.domain.Person;
 import ru.otus.homework.domain.Question;
 import ru.otus.homework.domain.TestResult;
 import ru.otus.homework.service.exception.MessageSourceIOServiceException;
+import ru.otus.homework.service.exception.NoUnansweredQuestionException;
 import ru.otus.homework.service.exception.TestServiceException;
 
 import java.util.List;
@@ -43,7 +44,65 @@ public class TestServiceImpl implements TestService {
             }
 
         }
-        final TestResult testResult = new TestResult(person, questionCreditCount, countCorrectAnswers, countQuestions);
-        return testResult;
+        return new TestResult(person, questionCreditCount, countCorrectAnswers, countQuestions);
+    }
+
+    public List<Question> getQuestionList() {
+        return questionDao.findAll();
+    }
+
+    public void answerNextQuestion(List<Question> questionList) {
+        try {
+            Question question = questionList.stream().filter(q -> q.getUserAnswer() == null).findFirst()
+                    .orElseThrow(() -> new NoUnansweredQuestionException("There are no unanswered questions!"));
+            try {
+                question.setUserAnswer(testQuestion(question));
+            } catch (TestServiceException e) {
+                messageSourceIOService.println("message.output.error.answer");
+            }
+        } catch (NoUnansweredQuestionException e) {
+            messageSourceIOService.println("message.output.question.next");
+        }
+    }
+
+    public void answerQuestionByNumber(List<Question> questionList, int number) {
+        if ((number >= 0) && (number < questionList.size())) {
+            Question question = questionList.get(number);
+            try {
+                question.setUserAnswer(testQuestion(question));
+            } catch (TestServiceException e) {
+                messageSourceIOService.println("message.output.error.answer");
+            }
+        } else {
+            messageSourceIOService.println("message.output.error.question.number");
+        }
+    }
+
+    public TestResult testFromList(Person person, List<Question> questionList, int questionCreditCount) {
+        int countCorrectAnswers = 0;
+        int countQuestions = 0;
+        for (Question question: questionList) {
+            countQuestions++;
+            if (question.getUserAnswer().equals(question.getAnswer())) {
+                countCorrectAnswers++;
+            }
+        }
+        return new TestResult(person, questionCreditCount, countCorrectAnswers, countQuestions);
+    }
+
+    private String testQuestion(Question question) throws TestServiceException {
+        messageSourceIOService.print("message.output.question.caption");
+        ioService.println(question.getText());
+        if (question.getUserAnswer() != null) {
+            messageSourceIOService.print("message.output.answer.caption.previous");
+            ioService.println("(" + question.getUserAnswer() + ")");
+        }
+        messageSourceIOService.print("message.output.answer.caption");
+        try {
+            return messageSourceIOService.readLine();
+        }
+        catch(MessageSourceIOServiceException e) {
+            throw new TestServiceException("Answering error!", e);
+        }
     }
 }
