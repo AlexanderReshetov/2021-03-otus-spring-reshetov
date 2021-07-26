@@ -12,6 +12,7 @@ public class QuestionTest {
     private static final String TEST_TEXT2 = "Text2";
     private static final String TEST_ANSWER = "Answer";
     private static final String TEST_ANSWER2 = "Answer2";
+    private static final String TEST_USER_ANSWER_NON_EQUAL = "UserAnswer";
 
     @Test
     @DisplayName("корректно создаться конструктором")
@@ -35,6 +36,18 @@ public class QuestionTest {
         assertNotEquals(question, questionDiffByText);
         assertNotEquals(question, questionDiffByAnswer);
         assertNotEquals(question, questionDiffByTextAndAnswer);
+    }
+
+    @Test
+    @DisplayName("корректно сравнить ответы")
+    void shouldHaveCorrectEqualsMethodForAnswers() {
+        final Question question = question();
+        question.setUserAnswer(TEST_ANSWER);
+        final Question questionDiffAnswers = question();
+        questionDiffAnswers.setUserAnswer(TEST_USER_ANSWER_NON_EQUAL);
+
+        assertEquals(question.getAnswer(), question.getUserAnswer());
+        assertNotEquals(question.getAnswer(), questionDiffAnswers.getUserAnswer());
     }
 
     private Question question() {

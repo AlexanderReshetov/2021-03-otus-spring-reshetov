@@ -11,6 +11,8 @@ import ru.otus.homework.domain.Person;
 import ru.otus.homework.domain.TestResult;
 import ru.otus.homework.service.exception.PersonInputDataException;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
@@ -62,6 +64,14 @@ public class TestRunnerServiceImplTest {
     }
 
     @Test
+    @DisplayName("провести тестирование с предварительно заданными данными пользователя")
+    void shouldExecuteTestWithPresetPersonData() throws Exception {
+        testRunnerService.run("TestSurname", "TestName");
+
+        verify(testService).test(any(), eq(QUESTION_CREDIT_COUNT));
+    }
+
+    @Test
     @DisplayName("вывести результаты тестирования")
     void shouldOutputTestResults() throws Exception {
         final Person person = person();
@@ -70,6 +80,18 @@ public class TestRunnerServiceImplTest {
         given(testService.test(person, QUESTION_CREDIT_COUNT)).willReturn(testResult);
 
         testRunnerService.run();
+
+        verify(testResultOutputService).output(testResult);
+    }
+
+    @Test
+    @DisplayName("вывести результаты тестирования с предварительно заданными данными пользователя")
+    void shouldOutputTestResultsWithPresetPersonData() throws Exception {
+        final Person person = person();
+        final TestResult testResult = new TestResult(person, QUESTION_CREDIT_COUNT, 5, 5);
+        given(testService.test(any(), eq(QUESTION_CREDIT_COUNT))).willReturn(testResult);
+
+        testRunnerService.run("TestSurname", "TestName");
 
         verify(testResultOutputService).output(testResult);
     }

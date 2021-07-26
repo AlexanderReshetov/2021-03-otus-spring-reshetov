@@ -19,7 +19,7 @@ public class ApplicationRunnerImplTest {
 
     @DisplayName("запустить сервис запуска тестирования TestRunnerService")
     @Test
-    public void shouldExecuteTestRunnerService() {
+    void shouldExecuteTestRunnerService() {
         applicationRunnerService.run(null);
 
         verify(testRunnerService).run();

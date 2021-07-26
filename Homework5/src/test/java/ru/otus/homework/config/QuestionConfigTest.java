@@ -17,7 +17,7 @@ public class QuestionConfigTest {
 
     @Test
     @DisplayName("корректно установить имя и расширение файла")
-    public void shouldHaveCorrectFileAndExtension() {
+    void shouldHaveCorrectFileAndExtension() {
         final String fileName = "question";
         final String fileExtension = "csv";
         final QuestionConfig.File file = new QuestionConfig.File();
@@ -32,7 +32,7 @@ public class QuestionConfigTest {
 
     @Test
     @DisplayName("рассчитать локализованное имя файла")
-    public void shouldCalculateLocalizedFileName() {
+    void shouldCalculateLocalizedFileName() {
         final String fileName = "question";
         final String fileExtension = "csv";
         final QuestionConfig.File file = new QuestionConfig.File();
@@ -49,7 +49,7 @@ public class QuestionConfigTest {
 
     @Test
     @DisplayName("корректно установить количество вопросов для получения зачета")
-    public void shouldHaveCorrectCreditCount() {
+    void shouldHaveCorrectCreditCount() {
         final int creditCount = 5;
         final QuestionConfig.Credit credit = new QuestionConfig.Credit();
 

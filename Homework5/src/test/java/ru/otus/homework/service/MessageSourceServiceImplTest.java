@@ -27,7 +27,7 @@ public class MessageSourceServiceImplTest {
 
     @Test
     @DisplayName("запустить метод getMessage класса MessageSource")
-    public void shouldExecuteGetMessageMethod() {
+    void shouldExecuteGetMessageMethod() {
         final String messageName = "testMessage";
         final Locale locale = new Locale("en");
         given(localeConfig.getLocale()).willReturn(locale);

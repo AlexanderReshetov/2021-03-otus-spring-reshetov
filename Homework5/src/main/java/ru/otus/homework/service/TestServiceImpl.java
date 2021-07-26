@@ -83,7 +83,7 @@ public class TestServiceImpl implements TestService {
         int countQuestions = 0;
         for (Question question: questionList) {
             countQuestions++;
-            if (question.getUserAnswer().equals(question.getAnswer())) {
+            if ((question.getUserAnswer() != null) && (question.getUserAnswer().equals(question.getAnswer()))) {
                 countCorrectAnswers++;
             }
         }

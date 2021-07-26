@@ -11,7 +11,7 @@ public class LocaleConfigTest {
 
     @Test
     @DisplayName("корректно установить имя локали")
-    public void shouldHaveCorrectNameSetter() {
+    void shouldHaveCorrectNameSetter() {
         final String testName = "testName";
         localeConfig = new LocaleConfig();
 
@@ -22,7 +22,7 @@ public class LocaleConfigTest {
 
     @Test
     @DisplayName("корректно создать локаль")
-    public void shouldCreateLocale() {
+    void shouldCreateLocale() {
         final String testName = "ru";
         localeConfig = new LocaleConfig();
 
