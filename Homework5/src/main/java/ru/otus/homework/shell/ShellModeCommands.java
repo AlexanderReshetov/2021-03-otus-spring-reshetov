@@ -24,6 +24,14 @@ public class ShellModeCommands {
     private Person person;
     private boolean isShellMode;
 
+    public Person getPerson() {
+        return person;
+    }
+
+    public List<Question> getQuestionList() {
+        return questionList;
+    }
+
     public ShellModeCommands(QuestionConfig questionConfig, TestService testService, MessageSourceIOService messageSourceIOService, TestResultOutputService testResultOutputService) {
         this.questionCreditCount = questionConfig.getCredit().getCount();
         this.testService = testService;
