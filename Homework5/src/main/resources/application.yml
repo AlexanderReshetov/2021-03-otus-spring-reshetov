@@ -1,0 +1,14 @@
+locale:
+  name: ru
+question:
+  file:
+    name: question
+    extension: csv
+  credit:
+    count: 3
+spring:
+  messages:
+    basename: i18n/messages
+  output:
+    ansi:
+      enabled: always
