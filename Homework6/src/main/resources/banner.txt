@@ -1,0 +1,10 @@
+${AnsiColor.BRIGHT_BLACK}${AnsiBackground.BRIGHT_CYAN} ,_     _        ${AnsiColor.DEFAULT}${AnsiBackground.DEFAULT}
+${AnsiColor.BRIGHT_BLACK}${AnsiBackground.BRIGHT_CYAN} |\\_,-~/        ${AnsiColor.DEFAULT}${AnsiBackground.DEFAULT}
+${AnsiColor.BRIGHT_BLACK}${AnsiBackground.BRIGHT_CYAN} / _  _ |    ,--.${AnsiColor.DEFAULT}${AnsiBackground.DEFAULT}
+${AnsiColor.BRIGHT_BLACK}${AnsiBackground.BRIGHT_CYAN}(  @  @ )   / ,-'${AnsiColor.DEFAULT}${AnsiBackground.DEFAULT}
+${AnsiColor.BRIGHT_BLACK}${AnsiBackground.BRIGHT_CYAN} \  _T_/-._( (   ${AnsiColor.DEFAULT}${AnsiBackground.DEFAULT}
+${AnsiColor.BRIGHT_BLACK}${AnsiBackground.BRIGHT_CYAN} /         `. \  ${AnsiColor.DEFAULT}${AnsiBackground.DEFAULT}
+${AnsiColor.BRIGHT_BLACK}${AnsiBackground.BRIGHT_CYAN}|         _  \ | ${AnsiColor.DEFAULT}${AnsiBackground.DEFAULT}
+${AnsiColor.BRIGHT_BLACK}${AnsiBackground.BRIGHT_CYAN} \ \ ,  /      | ${AnsiColor.DEFAULT}${AnsiBackground.DEFAULT}
+${AnsiColor.BRIGHT_BLACK}${AnsiBackground.BRIGHT_CYAN}  || |-_\__   /  ${AnsiColor.DEFAULT}${AnsiBackground.DEFAULT}
+${AnsiColor.BRIGHT_BLACK}${AnsiBackground.BRIGHT_CYAN} ((_/`(____,-'   ${AnsiColor.DEFAULT}${AnsiBackground.DEFAULT}
