@@ -27,11 +27,10 @@ public class BookDaoJdbc implements BookDao {
 
     public void insert(Book book) {
         final Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("id", book.getId());
         paramMap.put("name", book.getName());
         paramMap.put("authorId", book.getAuthor().getId());
         paramMap.put("genreId", book.getGenre().getId());
-        namedParameterJdbcOperations.update("insert into book(id, name, authorId, genreId) values(:id, :name, :authorId, :genreId)",
+        namedParameterJdbcOperations.update("insert into book(name, authorId, genreId) values(:name, :authorId, :genreId)",
                 paramMap);
     }
 

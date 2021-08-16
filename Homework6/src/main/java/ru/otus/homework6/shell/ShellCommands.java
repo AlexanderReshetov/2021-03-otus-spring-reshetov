@@ -14,8 +14,8 @@ public class ShellCommands {
     }
 
     @ShellMethod(key = "insert", value = "Insert book with <Book id> <Book name> <Author id> <Genre id>")
-    public void insert(@ShellOption("id") Long id, @ShellOption("name") String name, @ShellOption("authorId") Long authorId, @ShellOption("genreId") Long genreId) {
-        bookService.insert(id, name, authorId, genreId);
+    public void insert(@ShellOption("name") String name, @ShellOption("authorId") Long authorId, @ShellOption("genreId") Long genreId) {
+        bookService.insert(name, authorId, genreId);
     }
 
     @ShellMethod(key = "update", value = "Update book by <Book id> with <Book name> <Author id> <Genre id>")

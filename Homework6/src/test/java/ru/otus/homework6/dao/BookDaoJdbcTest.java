@@ -31,7 +31,7 @@ public class BookDaoJdbcTest {
     private static final String EXISTING_BOOK_AUTHOR_NAME_2 = "TestAuthor1";
     private static final Long EXISTING_BOOK_GENRE_ID_2 = 2L;
     private static final String EXISTING_BOOK_GENRE_NAME_2 = "TestGenre2";
-    private static final Long NON_EXISTING_BOOK_ID = 0L;
+    private static final Long NON_EXISTING_BOOK_ID = 3L;
     private static final String NON_EXISTING_BOOK_NAME = "Non-existing book";
 
     @Autowired

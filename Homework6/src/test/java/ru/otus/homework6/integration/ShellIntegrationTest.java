@@ -64,7 +64,7 @@ public class ShellIntegrationTest {
     @Test
     @DisplayName("добавить новую книгу и получить ее по ИД")
     void shouldInsertBookAndGetItById() {
-        shell.evaluate(() -> "insert " + NEW_BOOK_ID + " " + NEW_BOOK_NAME + " " + NEW_AUTHOR_ID + " " + NEW_GENRE_ID);
+        shell.evaluate(() -> "insert " + NEW_BOOK_NAME + " " + NEW_AUTHOR_ID + " " + NEW_GENRE_ID);
         shell.evaluate(() -> "show " + NEW_BOOK_ID);
 
         verify(printService).println("Id = " + NEW_BOOK_ID);

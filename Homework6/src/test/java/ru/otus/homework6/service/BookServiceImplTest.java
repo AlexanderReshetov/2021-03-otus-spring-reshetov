@@ -32,7 +32,7 @@ public class BookServiceImplTest {
     @Test
     @DisplayName("добавить книгу")
     void shouldInsertBook() {
-        bookService.insert(1L, "TestBook", 2L, 3L);
+        bookService.insert("TestBook", 2L, 3L);
 
         verify(authorDao).findById(2L);
         verify(genreDao).findById(3L);

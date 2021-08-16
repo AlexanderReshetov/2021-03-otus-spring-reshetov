@@ -21,9 +21,9 @@ public class ShellCommandsTest {
     @Test
     @DisplayName("добавить новую книгу")
     void shouldInsertBook() {
-        shellCommands.insert(1L, "Book", 2L, 3L);
+        shellCommands.insert("Book", 2L, 3L);
 
-        verify(bookService).insert(1L, "Book", 2L, 3L);
+        verify(bookService).insert("Book", 2L, 3L);
     }
 
     @Test

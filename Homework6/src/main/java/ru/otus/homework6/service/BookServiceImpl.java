@@ -22,8 +22,8 @@ public class BookServiceImpl implements BookService {
         this.printService = printService;
     }
 
-    public void insert(Long id, String name, Long authorId, Long genreId) {
-        bookDao.insert(new Book(id, name, authorDao.findById(authorId), genreDao.findById(genreId)));
+    public void insert(String name, Long authorId, Long genreId) {
+        bookDao.insert(new Book(name, authorDao.findById(authorId), genreDao.findById(genreId)));
     }
 
     public void update(Long id, String name, Long authorId, Long genreId) {

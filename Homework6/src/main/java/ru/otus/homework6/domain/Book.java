@@ -6,6 +6,13 @@ public class Book {
     private final Author author;
     private final Genre genre;
 
+    public Book(String name, Author author, Genre genre) {
+        this.id = null;
+        this.name = name;
+        this.author = author;
+        this.genre = genre;
+    }
+
     public Book(Long id, String name, Author author, Genre genre) {
         this.id = id;
         this.name = name;
