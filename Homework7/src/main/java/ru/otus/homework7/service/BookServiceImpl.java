@@ -63,11 +63,13 @@ public class BookServiceImpl implements BookService {
         printService.println("Genre id = " + book.getGenre().getId());
         printService.println("Genre name = " + book.getGenre().getName());
         int index = 0;
-        for(Comment comment: book.getComments()) {
-            printService.println("Comment " + (index + 1));
-            printService.println("Comment id = " + comment.getId());
-            printService.println("Comment text = " + comment.getText());
-            index++;
+        if (book.getComments() != null) {
+            for (Comment comment : book.getComments()) {
+                printService.println("Comment " + (index + 1));
+                printService.println("Comment id = " + comment.getId());
+                printService.println("Comment text = " + comment.getText());
+                index++;
+            }
         }
     }
 }

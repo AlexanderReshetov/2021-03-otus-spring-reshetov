@@ -6,14 +6,15 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import ru.otus.homework7.model.Author;
+import ru.otus.homework7.model.Book;
+import ru.otus.homework7.model.Genre;
 import ru.otus.homework7.repository.AuthorDaoJpa;
 import ru.otus.homework7.repository.BookDaoJpa;
 import ru.otus.homework7.repository.GenreDaoJpa;
-import ru.otus.homework7.repository.exception.BookNotExistsException;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("Сервис операций с книгами должен")
@@ -68,14 +69,17 @@ public class BookServiceImplTest {
     @Test
     @DisplayName("вывести информацию о книге по ИД")
     void shouldPrintBookById() {
-        when(bookDaoJpa.findById(1L)).thenThrow(BookNotExistsException.class);
+        Book book = new Book(1L, "TestBook1", new Author(1L, "TestAuthor1"), new Genre(1L, "TestGenre1"));
+        when(bookDaoJpa.findById(1L)).thenReturn(book);
 
-        try {
-            bookService.printById(1L);
-        }
-        catch (BookNotExistsException e) {
-        }
+        bookService.printById(1L);
 
         verify(bookDaoJpa).findById(1L);
+        verify(printService).println("Id = " + book.getId());
+        verify(printService).println("Name = " + book.getName());
+        verify(printService).println("Author id = " + book.getAuthor().getId());
+        verify(printService).println("Author name = " + book.getAuthor().getName());
+        verify(printService).println("Genre id = " + book.getGenre().getId());
+        verify(printService).println("Genre name = " + book.getGenre().getName());
     }
 }
