@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:test-db
+    initialization-mode: always
+    data: testdata.sql
+  output:
+    ansi:
+      enabled: always
