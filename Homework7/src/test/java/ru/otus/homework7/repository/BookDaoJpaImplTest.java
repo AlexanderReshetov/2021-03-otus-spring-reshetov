@@ -104,7 +104,7 @@ public class BookDaoJpaImplTest {
 
     @Test
     @DisplayName("получить полный список книг")
-    void shouldGetGenreList() {
+    void shouldGetBookList() {
         List<Book> bookList = bookDaoJpa.findAll();
 
         assertEquals(2, bookList.size());

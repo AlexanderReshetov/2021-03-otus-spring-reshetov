@@ -45,7 +45,7 @@ public class CommentDaoJpaImplTest {
 
     @Test
     @DisplayName("добавить комментарий")
-    void shouldInsertBook() {
+    void shouldInsertComment() {
         Long newCommentId = commentDaoJpa.insert(new Comment(new Book(EXISTING_BOOK_NAME_1, new Author(EXISTING_BOOK_AUTHOR_ID_1, EXISTING_BOOK_AUTHOR_NAME_1), new Genre(EXISTING_BOOK_GENRE_ID_1, EXISTING_BOOK_GENRE_NAME_1)), NON_EXISTING_COMMENT_TEXT));
         Comment comment = testEntityManager.find(Comment.class, newCommentId);
 
@@ -59,7 +59,7 @@ public class CommentDaoJpaImplTest {
 
     @Test
     @DisplayName("редактировать комментарий")
-    void shouldUpdateBook() {
+    void shouldUpdateComment() {
         commentDaoJpa.update(new Comment(EXISTING_BOOK_COMMENT_1_ID_1, new Book(EXISTING_BOOK_ID_1, EXISTING_BOOK_NAME_1, new Author(EXISTING_BOOK_AUTHOR_ID_1, EXISTING_BOOK_AUTHOR_NAME_1), new Genre(EXISTING_BOOK_GENRE_ID_2, EXISTING_BOOK_GENRE_NAME_2)), NON_EXISTING_COMMENT_TEXT));
         Comment comment = testEntityManager.find(Comment.class, EXISTING_BOOK_COMMENT_1_ID_1);
 
@@ -74,7 +74,7 @@ public class CommentDaoJpaImplTest {
 
     @Test
     @DisplayName("удалить комментарий")
-    void shouldDeleteBook() {
+    void shouldDeleteComment() {
         commentDaoJpa.delete(EXISTING_BOOK_COMMENT_1_ID_1);
 
         assertNull(testEntityManager.find(Comment.class, EXISTING_BOOK_COMMENT_1_ID_1));
@@ -82,7 +82,7 @@ public class CommentDaoJpaImplTest {
 
     @Test
     @DisplayName("получить комментарий по ИД")
-    void shouldGetBookById() {
+    void shouldGetCommentById() {
         Comment entityManagerComment = testEntityManager.find(Comment.class, EXISTING_BOOK_COMMENT_1_ID_1);
         Comment comment = commentDaoJpa.findById(EXISTING_BOOK_COMMENT_1_ID_1);
 
@@ -97,14 +97,14 @@ public class CommentDaoJpaImplTest {
     }
 
     @Test
-    @DisplayName("вызвать исключение при получении книги по неверному ИД")
+    @DisplayName("вызвать исключение при получении комментария по неверному ИД")
     void shouldThrowExceptionWhenWrongId() {
         assertThrows(CommentNotExistsException.class, () -> commentDaoJpa.findById(NON_EXISTING_COMMENT_ID));
     }
 
     @Test
-    @DisplayName("получить полный список книг")
-    void shouldGetGenreList() {
+    @DisplayName("получить полный список комментариев")
+    void shouldGetCommentList() {
         List<Comment> commentList = commentDaoJpa.findAll();
 
         assertEquals(3, commentList.size());
