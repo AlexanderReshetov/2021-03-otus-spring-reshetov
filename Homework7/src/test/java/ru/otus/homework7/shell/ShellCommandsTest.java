@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.otus.homework7.service.BookService;
+import ru.otus.homework7.service.CommentService;
 
 import static org.mockito.Mockito.verify;
 
@@ -15,6 +16,8 @@ import static org.mockito.Mockito.verify;
 public class ShellCommandsTest {
     @Mock
     private BookService bookService;
+    @Mock
+    private CommentService commentService;
     @InjectMocks
     private ShellCommands shellCommands;
 
@@ -56,5 +59,45 @@ public class ShellCommandsTest {
         shellCommands.showById(1L);
 
         verify(bookService).printById(1L);
+    }
+
+    @Test
+    @DisplayName("добавить комментарий")
+    void shouldAddComment() {
+        shellCommands.addComment(1L, "NewComment");
+
+        verify(commentService).insert(1L, "NewComment");
+    }
+
+    @Test
+    @DisplayName("редактировать комментарий")
+    void shouldEditComment() {
+        shellCommands.editComment(1L, 2L, "TestComment");
+
+        verify(commentService).update(1L, 2L, "TestComment");
+    }
+
+    @Test
+    @DisplayName("удалить комментарий")
+    void shouldDeleteComment() {
+        shellCommands.removeComment(1L);
+
+        verify(commentService).delete(1L);
+    }
+
+    @Test
+    @DisplayName("отобразить список всех комментариев")
+    void shouldShowAllComments() {
+        shellCommands.showAllComments();
+
+        verify(commentService).printAll();
+    }
+
+    @Test
+    @DisplayName("отобразить информацию о комментарии по ИД")
+    void shouldShowCommentById() {
+        shellCommands.showCommentById(1L);
+
+        verify(commentService).printById(1L);
     }
 }
