@@ -1,0 +1,10 @@
+insert into author (id, name) values (1, 'TestAuthor1');
+insert into author (id, name) values (2, 'TestAuthor2');
+insert into genre (id, name) values (1, 'TestGenre1');
+insert into genre (id, name) values (2, 'TestGenre2');
+insert into genre (id, name) values (3, 'TestGenre3');
+insert into book (id, name, author_id, genre_id) values (1, 'TestBook1', 1, 1);
+insert into book (id, name, author_id, genre_id) values (2, 'TestBook2', 1, 2);
+insert into comment (id, book_id, text) values(1, 1, 'TestComment1ForBook1');
+insert into comment (id, book_id, text) values(2, 2, 'TestComment1ForBook2');
+insert into comment (id, book_id, text) values(3, 2, 'TestComment2ForBook2');
