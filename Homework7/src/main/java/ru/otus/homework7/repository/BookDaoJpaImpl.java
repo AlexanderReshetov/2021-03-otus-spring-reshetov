@@ -17,6 +17,7 @@ public class BookDaoJpaImpl implements BookDaoJpa {
 
     public Long insert(Book book) {
         entityManager.persist(book);
+        entityManager.flush();
         return book.getId();
     }
 
@@ -31,7 +32,7 @@ public class BookDaoJpaImpl implements BookDaoJpa {
     }
 
     public List<Book> findAll() {
-        TypedQuery<Book> query = entityManager.createQuery("select b from Book b order by b.id", Book.class);
+        TypedQuery<Book> query = entityManager.createQuery("select b from Book b left join fetch b.author left join fetch b.genre order by b.id", Book.class);
         return query.getResultList();
     }
 

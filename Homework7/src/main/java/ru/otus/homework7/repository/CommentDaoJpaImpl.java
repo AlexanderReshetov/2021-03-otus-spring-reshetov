@@ -17,6 +17,7 @@ public class CommentDaoJpaImpl implements CommentDaoJpa {
 
     public Long insert(Comment comment) {
         entityManager.persist(comment);
+        entityManager.flush();
         return comment.getId();
     }
 
@@ -31,7 +32,11 @@ public class CommentDaoJpaImpl implements CommentDaoJpa {
     }
 
     public List<Comment> findAll() {
-        TypedQuery<Comment> query = entityManager.createQuery("select c from Comment c", Comment.class);
+        TypedQuery<Comment> query = entityManager.createQuery("select c from Comment c" +
+                " left join fetch c.book b" +
+                " left join fetch b.author" +
+                " left join fetch b.genre" +
+                " order by c.id", Comment.class);
         return query.getResultList();
     }
 

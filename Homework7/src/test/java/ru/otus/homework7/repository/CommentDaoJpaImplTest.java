@@ -68,8 +68,8 @@ public class CommentDaoJpaImplTest {
         assertEquals(EXISTING_BOOK_NAME_1, comment.getBook().getName());
         assertEquals(EXISTING_BOOK_AUTHOR_ID_1, comment.getBook().getAuthor().getId());
         assertEquals(EXISTING_BOOK_AUTHOR_NAME_1, comment.getBook().getAuthor().getName());
-        assertEquals(EXISTING_BOOK_GENRE_ID_1, comment.getBook().getGenre().getId());
-        assertEquals(EXISTING_BOOK_GENRE_NAME_1, comment.getBook().getGenre().getName());
+        assertEquals(EXISTING_BOOK_GENRE_ID_2, comment.getBook().getGenre().getId());
+        assertEquals(EXISTING_BOOK_GENRE_NAME_2, comment.getBook().getGenre().getName());
     }
 
     @Test

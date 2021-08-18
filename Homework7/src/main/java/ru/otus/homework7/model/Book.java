@@ -21,8 +21,7 @@ public class Book {
     @JoinColumn(name = "genre_id", referencedColumnName = "id")
     private Genre genre;
     @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "book_id")
+    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, mappedBy = "book")
     private List<Comment> comments;
 
     public Book() {
