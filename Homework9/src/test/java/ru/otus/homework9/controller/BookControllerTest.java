@@ -25,7 +25,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -38,6 +37,7 @@ public class BookControllerTest {
     @Autowired
     private BookRepository bookRepository;
 
+    @DirtiesContext
     @Test
     @DisplayName("добавить книгу")
     void shouldInsertBook() throws Exception {
@@ -58,6 +58,7 @@ public class BookControllerTest {
         assertEquals("NewBook", book.getName());
     }
 
+    @DirtiesContext
     @Test
     @DisplayName("обновить данные по книге")
     void shouldUpdateBook() throws Exception {
@@ -78,6 +79,7 @@ public class BookControllerTest {
         assertEquals("NewBook", book.getName());
     }
 
+    @DirtiesContext
     @Test
     @DisplayName("удалить книгу")
     void shouldDeleteBook() throws Exception {

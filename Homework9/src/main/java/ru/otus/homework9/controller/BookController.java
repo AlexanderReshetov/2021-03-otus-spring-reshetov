@@ -12,7 +12,6 @@ import ru.otus.homework9.service.exception.BookNotExistsException;
 import java.util.List;
 
 @RestController
-@RequestMapping("books")
 public class BookController {
     private final BookService bookService;
 
@@ -21,34 +20,34 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @PostMapping
+    @PostMapping("/books")
     public ResponseEntity<ResponseBookDto> insertBook(@RequestBody RequestBookDto requestBookDto) {
         return ResponseEntity.ok(bookService.insert(requestBookDto));
     }
 
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/books/{id}")
     public ResponseEntity<ResponseBookDto> updateBook(@PathVariable("id") Long id,
                                                       @RequestBody RequestBookDto requestBookDto) {
         return ResponseEntity.ok(bookService.update(id, requestBookDto));
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/books/{id}")
     public ResponseEntity<Long> deleteBook(@PathVariable("id") Long id) {
         return ResponseEntity.ok(bookService.delete(id));
     }
 
-    @GetMapping("/")
+    @GetMapping("/books/")
     public ResponseEntity<List<ResponseBookDto>> getAllBooks() {
         return ResponseEntity.ok(bookService.getAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/books/{id}")
     public ResponseEntity<ResponseBookDto> getBookById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(bookService.getById(id));
     }
 
-    @GetMapping("/{id}/comments/")
-    public ResponseEntity<List<ResponseCommentDto>> getCommentsById(@PathVariable("id") Long id) {
+    @GetMapping("/books/{bookId}/comments/")
+    public ResponseEntity<List<ResponseCommentDto>> getCommentsById(@PathVariable("bookId") Long id) {
         return ResponseEntity.ok(bookService.getCommentsById(id));
     }
 

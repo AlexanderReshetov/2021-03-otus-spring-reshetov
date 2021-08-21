@@ -10,7 +10,6 @@ import ru.otus.homework9.service.exception.AuthorNotExistsException;
 import java.util.List;
 
 @RestController
-@RequestMapping("authors")
 public class AuthorController {
     private final AuthorService authorService;
 
@@ -19,12 +18,12 @@ public class AuthorController {
         this.authorService = authorService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/authors/")
     public ResponseEntity<List<ResponseAuthorDto>> getAllAuthors() {
         return ResponseEntity.ok(authorService.getAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/authors/{id}")
     public ResponseEntity<ResponseAuthorDto> getAuthorById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(authorService.getById(id));
     }

@@ -26,7 +26,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -39,6 +38,7 @@ public class CommentControllerTest {
     @Autowired
     private CommentRepository commentRepository;
 
+    @DirtiesContext
     @Test
     @DisplayName("добавить комментарий")
     void shouldAddComment() throws Exception {
@@ -58,6 +58,7 @@ public class CommentControllerTest {
         assertEquals("NewComment", comment.getText());
     }
 
+    @DirtiesContext
     @Test
     @DisplayName("редактировать комментарий")
     void shouldEditComment() throws Exception {
@@ -77,6 +78,7 @@ public class CommentControllerTest {
         assertEquals("NewComment", comment.getText());
     }
 
+    @DirtiesContext
     @Test
     @DisplayName("удалить комментарий")
     void shouldDeleteComment() throws Exception {

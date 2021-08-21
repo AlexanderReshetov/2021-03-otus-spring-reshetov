@@ -11,7 +11,6 @@ import ru.otus.homework9.service.exception.CommentNotExistsException;
 import java.util.List;
 
 @RestController
-@RequestMapping("comments")
 public class CommentController {
     private final CommentService commentService;
 
@@ -20,28 +19,28 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @PostMapping
+    @PostMapping("/comments")
     public ResponseEntity<ResponseCommentDto> addComment(@RequestBody RequestCommentDto requestCommentDto) {
         return ResponseEntity.ok(commentService.insert(requestCommentDto));
     }
 
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/comments/{id}")
     public ResponseEntity<ResponseCommentDto> editComment(@PathVariable("id") Long id,
                                                          @RequestBody RequestCommentDto requestCommentDto) {
         return ResponseEntity.ok(commentService.update(id, requestCommentDto));
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/comments/{id}")
     public ResponseEntity<Long> removeComment(@PathVariable("id") Long id) {
         return ResponseEntity.ok(commentService.delete(id));
     }
 
-    @GetMapping("/")
+    @GetMapping("/comments/")
     public ResponseEntity<List<ResponseCommentDto>> getAllComments() {
         return ResponseEntity.ok(commentService.getAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/comments/{id}")
     public ResponseEntity<ResponseCommentDto> getCommentById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(commentService.getById(id));
     }

@@ -10,7 +10,6 @@ import ru.otus.homework9.service.exception.GenreNotExistsException;
 import java.util.List;
 
 @RestController
-@RequestMapping("genres")
 public class GenreController {
     private final GenreService genreService;
 
@@ -19,12 +18,12 @@ public class GenreController {
         this.genreService = genreService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/genres/")
     public ResponseEntity<List<ResponseGenreDto>> getAllGenres() {
         return ResponseEntity.ok(genreService.getAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/genres/{id}")
     public ResponseEntity<ResponseGenreDto> getGenreById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(genreService.getById(id));
     }
