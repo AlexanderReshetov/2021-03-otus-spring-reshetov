@@ -21,28 +21,28 @@ public class CommentController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseCommentDto> insertBook(@RequestBody RequestCommentDto requestCommentDto) {
+    public ResponseEntity<ResponseCommentDto> addComment(@RequestBody RequestCommentDto requestCommentDto) {
         return ResponseEntity.ok(commentService.insert(requestCommentDto));
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ResponseCommentDto> updateBook(@PathVariable("id") Long id,
+    public ResponseEntity<ResponseCommentDto> editComment(@PathVariable("id") Long id,
                                                          @RequestBody RequestCommentDto requestCommentDto) {
         return ResponseEntity.ok(commentService.update(id, requestCommentDto));
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Long> deleteBook(@PathVariable("id") Long id) {
+    public ResponseEntity<Long> removeComment(@PathVariable("id") Long id) {
         return ResponseEntity.ok(commentService.delete(id));
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<ResponseCommentDto>> getAllBooks() {
+    public ResponseEntity<List<ResponseCommentDto>> getAllComments() {
         return ResponseEntity.ok(commentService.getAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseCommentDto> getBookById(@PathVariable("id") Long id) {
+    public ResponseEntity<ResponseCommentDto> getCommentById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(commentService.getById(id));
     }
 
