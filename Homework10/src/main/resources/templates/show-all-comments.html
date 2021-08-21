@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Show all comments</title>
+</head>
+<body>
+<table>
+    <th:block th:each="comment : ${comments}">
+        <tr>
+            <td th:text="${'Comment id = ' + comment.getId}">...</td>
+        </tr>
+        <tr>
+            <td th:text="${'Book id = ' + comment.getBookId}">...</td>
+        </tr>
+        <tr>
+            <td th:text="${'Book name = ' + comment.getBookName}">...</td>
+        </tr>
+        <tr>
+            <td th:text="${'Comment text = ' + comment.getText}">...</td>
+        </tr>
+        <tr>
+            <td>------------------------------------------------------------</td>
+        </tr>
+    </th:block>
+</table>
+<a th:href="@{/}">Return</a>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Show all authors</title>
+</head>
+<body>
+<table>
+    <th:block th:each="genre : ${genres}">
+        <tr>
+            <td th:text="${'Genre id = ' + genre.getId}">...</td>
+        </tr>
+        <tr>
+            <td th:text="${'Genre name = ' + genre.getName}">...</td>
+        </tr>
+        <tr>
+            <td>------------------------------------------------------------</td>
+        </tr>
+    </th:block>
+</table>
+<a th:href="@{/}">Return</a>
+</body>
+</html>

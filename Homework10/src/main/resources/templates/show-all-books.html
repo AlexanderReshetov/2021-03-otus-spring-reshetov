@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Show all books</title>
+</head>
+<body>
+<table>
+    <th:block th:each="book : ${books}">
+        <tr>
+            <td th:text="${'Book id = ' + book.getId}">...</td>
+        </tr>
+        <tr>
+            <td th:text="${'Book name = ' + book.getName}">...</td>
+        </tr>
+        <tr>
+            <td th:text="${'Author id = ' + book.getAuthorDto.getId}">...</td>
+        </tr>
+        <tr>
+            <td th:text="${'Author name = ' + book.getAuthorDto.getName}">...</td>
+        </tr>
+        <tr>
+            <td th:text="${'Genre id = ' + book.getGenreDto.getId}">...</td>
+        </tr>
+        <tr>
+            <td th:text="${'Genre name = ' + book.getGenreDto.getName}">...</td>
+        </tr>
+        <th:block th:each="comment : ${book.getCommentDtoList}">
+            <tr>
+                <td th:text="${'Comment id = ' + comment.getId}">...</td>
+            </tr>
+            <tr>
+                <td th:text="${'Comment text = ' + comment.getText}">...</td>
+            </tr>
+        </th:block>
+        <tr>
+            <td>------------------------------------------------------------</td>
+        </tr>
+    </th:block>
+</table>
+<a th:href="@{/}">Return</a>
+</body>
+</html>
