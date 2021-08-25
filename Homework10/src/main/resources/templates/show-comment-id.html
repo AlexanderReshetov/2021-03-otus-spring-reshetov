@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Input comment id</title>
+</head>
+<body>
+    <form th:action="@{/comments/show}">
+        <label>Id = </label><input type="text" th:name="id"/>
+        <input type="submit" value = "Send"/>
+    </form>
+    <a th:href="@{/}">Return</a>
+</body>
+</html>

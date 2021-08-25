@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Show author</title>
+</head>
+<body>
+<table>
+    <tr>
+        <td th:text="${'Author id = ' + author.getId}">...</td>
+    </tr>
+    <tr>
+        <td th:text="${'Author name = ' + author.getName}">...</td>
+    </tr>
+</table>
+<a th:href="@{/}">Return</a>
+</body>
+</html>

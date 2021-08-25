@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Online library's main page</title>
+</head>
+<body>
+<a th:href="@{authors/show}">show author</a>
+<br>
+<a th:href="@{authors/show-all}">show all authors</a>
+<br>
+<a th:href="@{genres/show}">show genre</a>
+<br>
+<a th:href="@{genres/show-all}">show all genres</a>
+<br>
+<a th:href="@{books/insert}">insert book</a>
+<br>
+<a th:href="@{books/update}">update book</a>
+<br>
+<a th:href="@{books/delete}">delete book</a>
+<br>
+<a th:href="@{books/show}">show book</a>
+<br>
+<a th:href="@{books/show-all}">show all books</a>
+<br>
+<a th:href="@{books/show-comments}">show comments for book</a>
+<br>
+<a th:href="@{comments/add}">add comment</a>
+<br>
+<a th:href="@{comments/edit}">edit comment</a>
+<br>
+<a th:href="@{comments/remove}">remove comment</a>
+<br>
+<a th:href="@{comments/show}">show comment</a>
+<br>
+<a th:href="@{comments/show-all}">show all comments</a>
+<br>
+<br>
+<a th:href="@{logout}">logout</a>
+</body>
+</html>

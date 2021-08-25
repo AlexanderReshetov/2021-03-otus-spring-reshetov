@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Deleted book</title>
+</head>
+<body>
+<span th:text="${'Book with Id = ' + id + ' was deleted'}">...</span>
+<br>
+<a th:href="@{/}">Return</a>
+</body>
+</html>
