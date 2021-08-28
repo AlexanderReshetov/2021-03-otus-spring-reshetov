@@ -72,6 +72,7 @@ public class AuthorControllerTest {
         return JWT.create()
                 .withSubject("reader")
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .withClaim(AUTHORITY_CLAIM, "ROLE_READER")
                 .sign(Algorithm.HMAC512(SECRET.getBytes()));
     }
 
@@ -79,6 +80,7 @@ public class AuthorControllerTest {
         return JWT.create()
                 .withSubject("commentator")
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .withClaim(AUTHORITY_CLAIM, "ROLE_COMMENTATOR")
                 .sign(Algorithm.HMAC512(SECRET.getBytes()));
     }
 }
