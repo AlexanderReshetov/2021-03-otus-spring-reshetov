@@ -57,7 +57,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
                     .getClaim(AUTHORITY_CLAIM).asString();
 
             if (userName != null) {
-                return new UsernamePasswordAuthenticationToken(userName, null, Arrays.asList(authorities.split(",")).stream().map((roleName) -> new Role(roleName)).collect(Collectors.toList()));
+                return new UsernamePasswordAuthenticationToken(userName, null, Arrays.stream(authorities.split(",")).map(Role :: new).collect(Collectors.toList()));
             }
             return null;
         }
