@@ -2,6 +2,7 @@ package ru.otus.homework11.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -46,15 +47,11 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         String token = request.getHeader(HEADER_STRING);
         if (token != null) {
-            final String userName = JWT.require(Algorithm.HMAC512(SECRET.getBytes()))
+            final DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC512(SECRET.getBytes()))
                     .build()
-                    .verify(token.replace(TOKEN_PREFIX, ""))
-                    .getSubject();
-
-            final String authorities = JWT.require(Algorithm.HMAC512(SECRET.getBytes()))
-                    .build()
-                    .verify(token.replace(TOKEN_PREFIX, ""))
-                    .getClaim(AUTHORITY_CLAIM).asString();
+                    .verify(token.replace(TOKEN_PREFIX, ""));
+            final String userName = decodedJWT.getSubject();
+            final String authorities = decodedJWT.getClaim(AUTHORITY_CLAIM).asString();
 
             if (userName != null) {
                 return new UsernamePasswordAuthenticationToken(userName, null, Arrays.stream(authorities.split(",")).map(Role :: new).collect(Collectors.toList()));
