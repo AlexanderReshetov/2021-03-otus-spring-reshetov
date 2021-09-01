@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:book-db
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  output:
+    ansi:
+      enabled: always
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "metrics, health, logfile"
+  endpoint:
+    health:
+      show-details: always
+  health:
+    defaults:
+      enabled: true
+logging:
+  level:
+    root: info
+  file:
+    name: "app.log"
