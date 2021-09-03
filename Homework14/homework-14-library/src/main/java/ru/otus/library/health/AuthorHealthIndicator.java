@@ -1,6 +1,7 @@
 package ru.otus.library.health;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.boot.actuate.health.Status;
@@ -14,10 +15,16 @@ import org.springframework.web.client.RestOperations;
 @Component
 public class AuthorHealthIndicator implements HealthIndicator {
     private final RestOperations restOperations;
+    private final String host;
+    private final String port;
 
     @Autowired
-    public AuthorHealthIndicator(RestOperations restOperations) {
+    public AuthorHealthIndicator(RestOperations restOperations,
+                                 @Value("${author-service.host}") String host,
+                                 @Value("${author-service.port}") String port) {
         this.restOperations = restOperations;
+        this.host = host;
+        this.port = port;
     }
 
     @Override
@@ -38,7 +45,7 @@ public class AuthorHealthIndicator implements HealthIndicator {
             final HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             final RequestEntity<?> loginRequestEntity = RequestEntity
-                    .post("http://localhost:8081/login")
+                    .post("http://" + host + ":" + port + "/login")
                     .headers(headers)
                     .body("{\"login\": \"user\",\"password\": \"password\"}");
             final ResponseEntity<String> tokenResponse = restOperations.exchange(loginRequestEntity, String.class);

@@ -9,3 +9,6 @@ spring:
   output:
     ansi:
       enabled: always
+author-service:
+  host: localhost
+  port: 8081
