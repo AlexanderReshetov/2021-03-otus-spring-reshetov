@@ -41,22 +41,10 @@ public class LoadAuthorsServiceImpl implements LoadAuthorsService {
     @Cacheable("authors")
     @Scheduled(fixedRate = 5 * 60 * 1000 + 30 * 1000)
     public List<ResponseAuthorDto> getAllAuthors() {
-        final HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        final RequestEntity<?> loginRequestEntity = RequestEntity
-                .post("http://" + host + ":" + port + "/login")
-                .headers(headers)
-                .body("{\"login\": \"user\",\"password\": \"password\"}");
-        final ResponseEntity<String> tokenResponse = restOperations.exchange(loginRequestEntity, String.class);
+        final ResponseEntity<String> tokenResponse = authenticate();
         if (tokenResponse.getStatusCode().is2xxSuccessful()) {
-            headers.put("Authorization", Collections.singletonList(tokenResponse.getBody().replace("user ", TOKEN_PREFIX)));
-
-            final RequestEntity<?> requestEntity = RequestEntity.get("http://" + host + ":" + port + "/authors/").headers(headers).build();
-            final ResponseEntity<List<ResponseAuthorDto>> authorsResponse = restOperations.exchange(requestEntity, new ParameterizedTypeReference<List<ResponseAuthorDto>>() {
-            });
-
+            final ResponseEntity<List<ResponseAuthorDto>> authorsResponse = getAuthorListByToken(tokenResponse);
             authorService.saveAll(authorsResponse.getBody());
-
             if (authorsResponse.getBody() != null)
                 return authorsResponse.getBody();
             else {
@@ -70,5 +58,24 @@ public class LoadAuthorsServiceImpl implements LoadAuthorsService {
     @CacheEvict(value = "authors", allEntries = true)
     @Scheduled(fixedRate = 5 * 60 * 1000, initialDelay = 5 * 60 * 1000)
     public void invalidateCache() {
+    }
+
+    private ResponseEntity<String> authenticate() {
+        final HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        final RequestEntity<?> loginRequestEntity = RequestEntity
+                .post("http://" + host + ":" + port + "/login")
+                .headers(headers)
+                .body("{\"login\": \"user\",\"password\": \"password\"}");
+        return restOperations.exchange(loginRequestEntity, String.class);
+    }
+
+    private ResponseEntity<List<ResponseAuthorDto>> getAuthorListByToken(ResponseEntity<String> tokenResponse) {
+        final HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.put("Authorization", Collections.singletonList(tokenResponse.getBody().replace("user ", TOKEN_PREFIX)));
+        final RequestEntity<?> requestEntity = RequestEntity.get("http://" + host + ":" + port + "/authors/").headers(headers).build();
+        return restOperations.exchange(requestEntity, new ParameterizedTypeReference<List<ResponseAuthorDto>>() {
+        });
     }
 }
