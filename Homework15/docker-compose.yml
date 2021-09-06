@@ -1,0 +1,27 @@
+version: '3'
+services:
+  author:
+    build:
+      context: homework-15-author
+      dockerfile: Dockerfile
+    privileged: true
+    ports:
+      - "8081:8081"
+    networks:
+      - nw
+  library:
+    build:
+      context: homework-15-library
+      dockerfile: Dockerfile
+    privileged: true
+    ports:
+      - "8080:8080"
+    environment:
+      - AUTHOR_SERVICE_HOST=author
+      - AUTHOR_SERVICE_PORT=8081
+    depends_on:
+      - author
+    networks:
+      - nw
+networks:
+  nw:
