@@ -12,3 +12,5 @@ spring:
 author-service:
   host: ${AUTHOR_SERVICE_HOST:localhost}
   port: ${AUTHOR_SERVICE_PORT:8081}
+schedule:
+  enabled: false

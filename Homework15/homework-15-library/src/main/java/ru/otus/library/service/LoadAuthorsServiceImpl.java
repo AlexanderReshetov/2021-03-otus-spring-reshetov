@@ -2,14 +2,12 @@ package ru.otus.library.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestOperations;
 import ru.otus.library.dto.ResponseAuthorDto;
@@ -39,7 +37,6 @@ public class LoadAuthorsServiceImpl implements LoadAuthorsService {
     }
 
     @Cacheable("authors")
-    @Scheduled(fixedRate = 5 * 60 * 1000 + 30 * 1000)
     public List<ResponseAuthorDto> getAllAuthors() {
         final ResponseEntity<String> tokenResponse = authenticate();
         if (tokenResponse.getStatusCode().is2xxSuccessful()) {
@@ -53,11 +50,6 @@ public class LoadAuthorsServiceImpl implements LoadAuthorsService {
         } else {
             throw new AuthenticationException("Can't get token from author service!");
         }
-    }
-
-    @CacheEvict(value = "authors", allEntries = true)
-    @Scheduled(fixedRate = 5 * 60 * 1000, initialDelay = 5 * 60 * 1000)
-    public void invalidateCache() {
     }
 
     private ResponseEntity<String> authenticate() {
