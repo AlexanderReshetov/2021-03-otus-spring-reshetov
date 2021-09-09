@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:test-db
+    initialization-mode: always
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+  output:
+    ansi:
+      enabled: always
+  cloud:
+    stream:
+      binders:
+        binderName:
+          type: kafka
+      bindings:
+        msgGenrePublish:
+          destination: ${MSG_GENRE:msgGenre} # Отправка сообщения со списком жанров
+  kafka:
+    bootstrap-servers: ${KAFKA_HOST}:${KAFKA_PORT}
+author-service:
+  host: localhost
+  port: 8081
+kafka:
+  enabled: false
+schedule:
+  enabled: false
