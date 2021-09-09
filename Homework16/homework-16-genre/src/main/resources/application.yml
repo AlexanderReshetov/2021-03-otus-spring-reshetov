@@ -1,0 +1,39 @@
+server:
+  port: 8082
+spring:
+  datasource:
+    url: jdbc:h2:mem:book-db
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  output:
+    ansi:
+      enabled: always
+  cloud:
+    stream:
+      binders:
+        binderName:
+          type: kafka
+      bindings:
+        msgGenrePublish:
+          destination: ${MSG_GENRE:msgGenre} # Отправка сообщения со списком жанров
+  kafka:
+    bootstrap-servers: ${KAFKA_HOST:fmfaqsr.diasoft.ru}:${KAFKA_PORT:9092}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "metrics, health, logfile"
+  endpoint:
+    health:
+      show-details: always
+  health:
+    defaults:
+      enabled: true
+logging:
+  level:
+    root: info
+  file:
+    name: "app.log"
