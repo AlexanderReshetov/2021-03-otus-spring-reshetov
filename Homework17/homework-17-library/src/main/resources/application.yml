@@ -42,3 +42,10 @@ author-service:
   port: 8081
 kafka:
   enabled: true
+hystrix:
+  command:
+    getAllAuthors:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000

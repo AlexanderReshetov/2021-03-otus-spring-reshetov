@@ -1,7 +1,6 @@
 package ru.otus.library.service;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
@@ -39,8 +38,7 @@ public class LoadAuthorsServiceImpl implements LoadAuthorsService {
     }
 
     @Cacheable("authors")
-    @HystrixCommand(commandKey = "getAllAuthors", fallbackMethod = "getAllAuthorsFromLocalDatabase",
-            commandProperties = {@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "60000")})
+    @HystrixCommand(commandKey = "getAllAuthors", fallbackMethod = "getAllAuthorsFromLocalDatabase")
     public List<ResponseAuthorDto> getAllAuthors() {
         final ResponseEntity<String> tokenResponse = authenticate();
         if (tokenResponse.getStatusCode().is2xxSuccessful()) {
