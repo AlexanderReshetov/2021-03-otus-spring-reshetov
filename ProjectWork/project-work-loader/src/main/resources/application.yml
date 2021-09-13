@@ -1,0 +1,37 @@
+server:
+  port: 8081
+spring:
+  output:
+    ansi:
+      enabled: always
+  security:
+    oauth2:
+      client:
+        registration:
+          blizzard:
+            client-id: a2de4ab62565436a8151bc25878c4d86
+            client-secret: 3ExDIsCrB1Muf1I190S2fDHgne8hzQxr
+            client-name: Auction data loader client
+            scope: wow.profile
+        provider:
+          blizzard:
+            issuer-uri: https://eu.battle.net/oauth
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "metrics, health, logfile"
+  endpoint:
+    health:
+      show-details: always
+  health:
+    defaults:
+      enabled: true
+logging:
+  level:
+    root: info
+  file:
+    name: "app.log"
+blizzard:
+  api:
+    host: https://eu.api.blizzard.com
