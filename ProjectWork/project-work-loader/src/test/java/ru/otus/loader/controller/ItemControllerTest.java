@@ -27,10 +27,10 @@ public class ItemControllerTest {
     @Test
     @DisplayName("запросить данные предмета и вернуть их")
     void shouldAskItemAndReturnData() {
-        when(loadItemService.getItemById(1L))
+        when(loadItemService.getItemById("token", 1L))
                 .thenReturn(new BlizzardItemDto(1L, new BlizzardNameDto("item", "предмет")));
 
-        ResponseEntity<ResponseItemDto> responseEntity = itemController.getItemById(1L);
+        ResponseEntity<ResponseItemDto> responseEntity = itemController.getItemById("token",1L);
 
         assertTrue(responseEntity.getStatusCode().is2xxSuccessful());
         assertEquals(1L, responseEntity.getBody().getId());

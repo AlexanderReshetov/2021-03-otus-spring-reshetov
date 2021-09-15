@@ -5,40 +5,48 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.reactive.function.client.ClientResponse;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
-import ru.otus.loader.dto.BlizzardItemDto;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestOperations;
+import ru.otus.loader.dto.*;
+import ru.otus.loader.service.exception.ItemException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("Сервис загрузки данных предмета должен")
 public class LoadItemServiceImplTest {
     @Mock
-    private WebClient.Builder webClientBuilder;
+    private RestOperations restOperations;
 
     @Test
     @DisplayName("вернуть данные предмета по идентификатору")
     void shouldReturnItemById() {
-        final WebClient webClient = WebClient.builder()
-                .exchangeFunction(clientRequest ->
-                        Mono.just(ClientResponse.create(HttpStatus.OK)
-                                .header("content-type", "application/json")
-                                .body("{\"id\": 1,\"name\": {\"en_US\": \"item\",\"ru_RU\": \"предмет\"}}")
-                                .build())
-                ).build();
-        when(webClientBuilder.baseUrl(any())).thenReturn(webClientBuilder);
-        when(webClientBuilder.build()).thenReturn(webClient);
+        when(restOperations.exchange(any(), eq(BlizzardItemDto.class)))
+                .thenReturn(ResponseEntity.ok(new BlizzardItemDto(1L, new BlizzardNameDto("item", "предмет"))));
+        final LoadItemService loadItemService = loadItemService();
 
-        LoadItemService loadItemService = new LoadItemServiceImpl(webClientBuilder, "");
-        BlizzardItemDto blizzardItemDto = loadItemService.getItemById(1L);
+        final BlizzardItemDto blizzardItemDto = loadItemService.getItemById("token", 1L);
 
         assertEquals(1L, blizzardItemDto.getId());
         assertEquals("item", blizzardItemDto.getBlizzardNameDto().getEn_US());
         assertEquals("предмет", blizzardItemDto.getBlizzardNameDto().getRu_RU());
+    }
+
+    @Test
+    @DisplayName("вызвать исключение, если данные предмета не получены")
+    void shouldThrowExceptionIfCannotLoadItem() {
+        when(restOperations.exchange(any(), eq(BlizzardItemDto.class)))
+                .thenReturn(ResponseEntity.badRequest().body(null));
+        final LoadItemService loadItemService = loadItemService();
+
+        assertThrows(ItemException.class, () -> loadItemService.getItemById("token", 1L));
+    }
+
+    private LoadItemService loadItemService() {
+        return new LoadItemServiceImpl(restOperations, "");
     }
 }

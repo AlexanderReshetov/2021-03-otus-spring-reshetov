@@ -5,9 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import ru.otus.loader.dto.ResponseRealmDto;
 import ru.otus.loader.service.LoadRealmsService;
+import ru.otus.loader.service.exception.RealmException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,11 +25,11 @@ public class RealmController {
 
     @Timed("REST_GET_ALL_REALMS")
     @GetMapping("/realms")
-    public ResponseEntity<List<ResponseRealmDto>> getAllRealms() {
-        return ResponseEntity.ok(loadRealmsService.getAllRealms().getBlizzardRealmDtoList().stream().map(ResponseRealmDto::toDto).collect(Collectors.toList()));
+    public ResponseEntity<List<ResponseRealmDto>> getAllRealms(@RequestHeader("Authorization") String token) {
+        return ResponseEntity.ok(loadRealmsService.getAllRealms(token).getBlizzardRealmDtoList().stream().map(ResponseRealmDto::toDto).collect(Collectors.toList()));
     }
 
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(RealmException.class)
     public ResponseEntity<String> errorLoadingRealm(Exception e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }

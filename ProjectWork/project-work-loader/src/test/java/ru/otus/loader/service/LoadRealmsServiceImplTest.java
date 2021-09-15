@@ -5,41 +5,56 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.reactive.function.client.ClientResponse;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestOperations;
+import ru.otus.loader.dto.BlizzardNameDto;
+import ru.otus.loader.dto.BlizzardRealmDto;
 import ru.otus.loader.dto.BlizzardRealmsDto;
+import ru.otus.loader.service.exception.RealmException;
+
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("Сервис загрузки игровых миров должен")
 public class LoadRealmsServiceImplTest {
     @Mock
-    private WebClient.Builder webClientBuilder;
+    private RestOperations restOperations;
 
     @Test
     @DisplayName("вернуть данные миров")
     void shouldReturnItemById() {
-        final WebClient webClient = WebClient.builder()
-                .exchangeFunction(clientRequest ->
-                        Mono.just(ClientResponse.create(HttpStatus.OK)
-                                .header("content-type", "application/json")
-                                .body("{\"realms\": [{\"id\": 1,\"name\": {\"en_US\": \"Goldrinn\",\"ru_RU\": \"Голдринн\"}}]}")
-                                .build())
-                ).build();
-        when(webClientBuilder.baseUrl(any())).thenReturn(webClientBuilder);
-        when(webClientBuilder.build()).thenReturn(webClient);
+        when(restOperations.exchange(any(), eq(BlizzardRealmsDto.class)))
+                .thenReturn(ResponseEntity.ok(
+                        new BlizzardRealmsDto(Collections.singletonList(
+                                new BlizzardRealmDto(1L,
+                                        new BlizzardNameDto("Goldrinn", "Голдринн"))))));
+        final LoadRealmsService loadRealmsService = loadRealmsService();
 
-        LoadRealmsService loadRealmsService = new LoadRealmsServiceImpl(webClientBuilder, "");
-        BlizzardRealmsDto blizzardRealmsDto = loadRealmsService.getAllRealms();
+        final BlizzardRealmsDto blizzardRealmsDto = loadRealmsService.getAllRealms("token");
 
         assertEquals(1L, blizzardRealmsDto.getBlizzardRealmDtoList().size());
         assertEquals(1L, blizzardRealmsDto.getBlizzardRealmDtoList().get(0).getId());
         assertEquals("Goldrinn", blizzardRealmsDto.getBlizzardRealmDtoList().get(0).getBlizzardNameDto().getEn_US());
         assertEquals("Голдринн", blizzardRealmsDto.getBlizzardRealmDtoList().get(0).getBlizzardNameDto().getRu_RU());
+    }
+
+    @Test
+    @DisplayName("вызвать исключение, если данные миров не получены")
+    void shouldThrowExceptionIfCannotLoadRealms() {
+        when(restOperations.exchange(any(), eq(BlizzardRealmsDto.class)))
+                .thenReturn(ResponseEntity.badRequest().body(null));
+        final LoadRealmsService loadRealmsService = loadRealmsService();
+
+        assertThrows(RealmException.class, () -> loadRealmsService.getAllRealms("token"));
+    }
+
+    private LoadRealmsService loadRealmsService() {
+        return new LoadRealmsServiceImpl(restOperations, "");
     }
 }

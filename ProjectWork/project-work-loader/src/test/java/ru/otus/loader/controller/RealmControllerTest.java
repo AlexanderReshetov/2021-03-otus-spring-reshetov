@@ -31,10 +31,10 @@ public class RealmControllerTest {
     @Test
     @DisplayName("запросить данные игровых миров и вернуть их")
     void shouldAskRealmsAndReturnData() {
-        when(loadRealmsService.getAllRealms())
+        when(loadRealmsService.getAllRealms("token"))
                 .thenReturn(new BlizzardRealmsDto(Collections.singletonList(new BlizzardRealmDto(1L, new BlizzardNameDto("Goldrinn", "Голдринн")))));
 
-        ResponseEntity<List<ResponseRealmDto>> responseEntity = realmController.getAllRealms();
+        ResponseEntity<List<ResponseRealmDto>> responseEntity = realmController.getAllRealms("token");
 
         assertTrue(responseEntity.getStatusCode().is2xxSuccessful());
         assertEquals(1, responseEntity.getBody().size());
