@@ -1,8 +1,13 @@
 package ru.otus.loader.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ResponseRealmDto {
+    @JsonProperty("id")
     private final Long id;
+    @JsonProperty("enName")
     private final String enName;
+    @JsonProperty("ruName")
     private final String ruName;
 
     public ResponseRealmDto(Long id, String enName, String ruName) {

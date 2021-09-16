@@ -28,10 +28,9 @@ public class TokenControllerTest {
         when(getTokenService.getToken())
                 .thenReturn(new BlizzardTokenDto("token", 86399L));
 
-        ResponseEntity<BlizzardTokenDto> responseEntity = tokenController.getToken();
+        ResponseEntity<ResponseTokenDto> responseEntity = tokenController.getToken();
 
         assertTrue(responseEntity.getStatusCode().is2xxSuccessful());
-        assertEquals("token", responseEntity.getBody().getToken());
-        assertEquals(86399L, responseEntity.getBody().getExpiresIn());
+        assertEquals("Bearer token", responseEntity.getBody().getToken());
     }
 }

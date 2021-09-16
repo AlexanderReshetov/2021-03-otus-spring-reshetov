@@ -33,16 +33,17 @@ public class LoadAuctionsServiceImplTest {
                 .thenReturn(ResponseEntity.ok(
                         new BlizzardAuctionsDto(Collections.singletonList(
                                 new BlizzardAuctionDto(1L,
-                                        new BlizzardAuctionItemDto(2L), 3L, 4L)))));
+                                        new BlizzardAuctionItemDto(2L), 3L, 4L, 5L)))));
         final LoadAuctionsService loadAuctionsService = loadAuctionsService();
 
         final BlizzardAuctionsDto blizzardAuctionsDto = loadAuctionsService.getAllAuctionsByRealmId("token", 1L);
 
         assertEquals(1, blizzardAuctionsDto.getBlizzardAuctionDtoList().size());
         assertEquals(1L, blizzardAuctionsDto.getBlizzardAuctionDtoList().get(0).getId());
-        assertEquals(2L, blizzardAuctionsDto.getBlizzardAuctionDtoList().get(0).getBlizzardItemDto().getId());
-        assertEquals(3L, blizzardAuctionsDto.getBlizzardAuctionDtoList().get(0).getItemPrice());
-        assertEquals(4L, blizzardAuctionsDto.getBlizzardAuctionDtoList().get(0).getCount());
+        assertEquals(2L, blizzardAuctionsDto.getBlizzardAuctionDtoList().get(0).getBlizzardAuctionItemDto().getId());
+        assertEquals(3L, blizzardAuctionsDto.getBlizzardAuctionDtoList().get(0).getBuyout());
+        assertEquals(4L, blizzardAuctionsDto.getBlizzardAuctionDtoList().get(0).getUnitPrice());
+        assertEquals(5L, blizzardAuctionsDto.getBlizzardAuctionDtoList().get(0).getCount());
     }
 
     @Test

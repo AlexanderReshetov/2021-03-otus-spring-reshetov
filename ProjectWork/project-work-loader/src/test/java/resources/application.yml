@@ -20,6 +20,8 @@ logging:
     root: info
   file:
     name: "app.log"
+schedule:
+  enable: false
 blizzard:
   host: https://eu.api.blizzard.com
   token-url: https://eu.api.blizzard.com/oauth/token

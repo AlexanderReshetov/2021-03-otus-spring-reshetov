@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestOperations;
 import ru.otus.loader.dto.BlizzardAuctionsDto;
 import ru.otus.loader.service.exception.AuctionException;
-import ru.otus.loader.service.exception.ItemException;
 
 import java.util.Collections;
 

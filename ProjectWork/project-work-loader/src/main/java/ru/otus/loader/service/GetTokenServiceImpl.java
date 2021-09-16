@@ -33,7 +33,7 @@ public class GetTokenServiceImpl implements GetTokenService {
         final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         final RequestEntity<?> loginRequestEntity = RequestEntity
-                .post(tokenUrl + "?grant_type=client_credentials&client_id=" + clientId + "&clientSecret=" + clientSecret)
+                .post(tokenUrl + "?grant_type=client_credentials&client_id=" + clientId + "&client_secret=" + clientSecret)
                 .headers(headers)
                 .body("");
         ResponseEntity<BlizzardTokenDto> responseEntity = restOperations.exchange(loginRequestEntity, BlizzardTokenDto.class);

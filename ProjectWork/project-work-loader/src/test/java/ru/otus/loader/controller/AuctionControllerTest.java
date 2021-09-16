@@ -32,7 +32,7 @@ public class AuctionControllerTest {
     @DisplayName("запросить данные аукциона и вернуть их")
     void shouldAskAuctionAndReturnData() {
         when(loadAuctionsService.getAllAuctionsByRealmId("token", 1L))
-                .thenReturn(new BlizzardAuctionsDto(Collections.singletonList(new BlizzardAuctionDto(1L, new BlizzardAuctionItemDto(2L), 3L, 4L))));
+                .thenReturn(new BlizzardAuctionsDto(Collections.singletonList(new BlizzardAuctionDto(1L, new BlizzardAuctionItemDto(2L), 3L, null, 4L))));
 
         ResponseEntity<List<ResponseAuctionDto>> responseEntity = auctionController.getAllAuctionsByRealmId("token", 1L);
 

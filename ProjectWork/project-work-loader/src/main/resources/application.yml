@@ -4,6 +4,16 @@ spring:
   output:
     ansi:
       enabled: always
+  cloud:
+    stream:
+      binders:
+        binderName:
+          type: kafka
+      bindings:
+        msgAuctionPublish:
+          destination: ${MSG_AUCTION:msgAuction} # Отправка сообщения со аукционным лотом
+  kafka:
+    bootstrap-servers: ${KAFKA_HOST:fmfaqsr.diasoft.ru}:${KAFKA_PORT:9092}
 management:
   endpoints:
     web:
@@ -22,6 +32,7 @@ logging:
     name: "app.log"
 blizzard:
   host: https://eu.api.blizzard.com
-  token-url: https://eu.api.blizzard.com/oauth/token
+  token-url: https://eu.battle.net/oauth/token
   client-id: a2de4ab62565436a8151bc25878c4d86
   client-secret: 3ExDIsCrB1Muf1I190S2fDHgne8hzQxr
+realm-ids: ${REALM_IDS:1605}

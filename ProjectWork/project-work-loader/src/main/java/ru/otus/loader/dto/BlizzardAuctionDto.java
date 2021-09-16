@@ -7,18 +7,21 @@ public class BlizzardAuctionDto {
     private Long id;
     @JsonProperty("item")
     private BlizzardAuctionItemDto blizzardAuctionItemDto;
+    @JsonProperty("buyout")
+    private Long buyout;
     @JsonProperty("unit_price")
-    private Long itemPrice;
+    private Long unitPrice;
     @JsonProperty("quantity")
     private Long count;
 
     public BlizzardAuctionDto() {
     }
 
-    public BlizzardAuctionDto(Long id, BlizzardAuctionItemDto blizzardAuctionItemDto, Long itemPrice, Long count) {
+    public BlizzardAuctionDto(Long id, BlizzardAuctionItemDto blizzardAuctionItemDto, Long buyout, Long unitPrice, Long count) {
         this.id = id;
         this.blizzardAuctionItemDto = blizzardAuctionItemDto;
-        this.itemPrice = itemPrice;
+        this.buyout = buyout;
+        this.unitPrice = unitPrice;
         this.count = count;
     }
 
@@ -26,15 +29,19 @@ public class BlizzardAuctionDto {
         return id;
     }
 
-    public BlizzardAuctionItemDto getBlizzardItemDto() {
+    public BlizzardAuctionItemDto getBlizzardAuctionItemDto() {
         return blizzardAuctionItemDto;
+    }
+
+    public Long getBuyout() {
+        return buyout;
+    }
+
+    public Long getUnitPrice() {
+        return unitPrice;
     }
 
     public Long getCount() {
         return count;
-    }
-
-    public Long getItemPrice() {
-        return itemPrice;
     }
 }

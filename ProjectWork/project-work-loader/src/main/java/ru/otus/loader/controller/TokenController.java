@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.otus.loader.dto.BlizzardTokenDto;
+import ru.otus.loader.dto.ResponseTokenDto;
 import ru.otus.loader.service.GetTokenService;
 import ru.otus.loader.service.exception.AuthenticationException;
 
@@ -19,8 +19,8 @@ public class TokenController {
     }
 
     @GetMapping("/token")
-    ResponseEntity<BlizzardTokenDto> getToken() {
-        return ResponseEntity.ok(getTokenService.getToken());
+    ResponseEntity<ResponseTokenDto> getToken() {
+        return ResponseEntity.ok(ResponseTokenDto.toDto(getTokenService.getToken()));
     }
 
     @ExceptionHandler(AuthenticationException.class)
