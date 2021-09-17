@@ -2,15 +2,12 @@ package ru.otus.main.dto;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import ru.otus.main.domain.Auction;
 
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ExtendWith(MockitoExtension.class)
 @DisplayName("Dto аукционного лота должен")
 public class ResponseAuctionDtoTest {
     private final static Long BLIZZARD_ID = 1L;

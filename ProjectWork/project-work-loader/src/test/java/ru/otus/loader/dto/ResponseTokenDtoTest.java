@@ -1,4 +1,4 @@
-package ru.otus.main.dto;
+package ru.otus.loader.dto;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@DisplayName("Dto токена должен")
+@DisplayName("Собственный dto токена должен")
 public class ResponseTokenDtoTest {
     @Test
     @DisplayName("корректно создаться конструктором")
