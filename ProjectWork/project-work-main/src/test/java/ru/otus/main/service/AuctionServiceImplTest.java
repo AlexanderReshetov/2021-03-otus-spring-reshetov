@@ -44,7 +44,7 @@ public class AuctionServiceImplTest {
 
     @Test
     @DisplayName("запросить данные из загрузчика")
-    void shouldGetDataFromAuctionRepository() {
+    void shouldGetDataFromLoader() {
         final AuctionService auctionService = auctionService();
         when(tokenService.getToken()).thenReturn(new Token(null, "token", LOCAL_DATE_TIME));
         when(restOperations.exchange(any(), Matchers.<ParameterizedTypeReference<List<ResponseAuctionDto>>>any()))

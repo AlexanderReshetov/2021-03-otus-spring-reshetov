@@ -9,5 +9,4 @@ public interface ItemService {
     Item loadItemById(Long id);
     Item loadItemById(String token, Long id);
     ItemAndTokenDto loadItemWithTokenById(Long id);
-    Optional<Item> getItemById(Long id);
 }

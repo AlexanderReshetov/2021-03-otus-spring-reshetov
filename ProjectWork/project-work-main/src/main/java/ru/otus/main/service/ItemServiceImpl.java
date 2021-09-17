@@ -65,7 +65,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<Item> getItemById(Long id) {
+    private Optional<Item> getItemById(Long id) {
         return Optional.ofNullable(itemRepository.findByBlizzardId(id));
     }
 

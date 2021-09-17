@@ -33,7 +33,7 @@ public class LoaderController {
 
     @Timed("REST_GET_ALL_REALMS")
     @GetMapping("/load/realms")
-    public ResponseEntity<List<Realm>> getAllRealms() {
+    public ResponseEntity<List<Realm>> loadAllRealms() {
         try {
             return ResponseEntity.ok(realmService.loadAllRealms());
         }
@@ -44,7 +44,7 @@ public class LoaderController {
 
     @Timed("REST_GET_ITEM_BY_ID")
     @GetMapping("/load/items/{id}")
-    public ResponseEntity<Item> getItemById(@PathVariable("id") Long id) {
+    public ResponseEntity<Item> loadItemById(@PathVariable("id") Long id) {
         try {
             return ResponseEntity.ok(itemService.loadItemById(id));
         }
