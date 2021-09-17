@@ -23,6 +23,7 @@ public class TokenRepositoryTest {
         final String tokenString = "token";
         final LocalDateTime localDateTime = LocalDateTime.now();
         Token token = new Token(null, tokenString, localDateTime);
+
         token = tokenRepository.save(token);
         final Long newId = token.getId();
         token = tokenRepository.findById(token.getId()).orElseThrow(() -> new TokenNotExistsException("There is no token with id = " + newId));

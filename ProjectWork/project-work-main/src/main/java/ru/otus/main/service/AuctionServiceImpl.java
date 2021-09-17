@@ -47,7 +47,7 @@ public class AuctionServiceImpl implements AuctionService {
         try {
             List<Auction> auctionList = getAuctionsByRealmIdFromBlizzard(tokenService.getToken().getToken(), realmId);
             if (auctionList.size() > 0) {
-                itemLoaderService.loadItemsByAuctions(auctionRepository.findAllByItemIsNull(auctionList.get(0).getLocalDateTime()));
+                itemLoaderService.loadItemsByAuctions(auctionRepository.findAllByLocalDateTimeWhereItemIsNotExists(auctionList.get(0).getLocalDateTime()));
             }
             return auctionList;
         }

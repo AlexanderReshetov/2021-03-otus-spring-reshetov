@@ -22,6 +22,7 @@ public class RealmRepositoryTest {
         final String enName = "Goldrinn";
         final String ruName = "Голдринн";
         Realm realm = new Realm(null, blizzardId, enName, ruName);
+
         realm = realmRepository.save(realm);
         final Long newId = realm.getId();
         realm = realmRepository.findById(realm.getId()).orElseThrow(() -> new RealmNotExistsException("There is no realm with id = " + newId));
