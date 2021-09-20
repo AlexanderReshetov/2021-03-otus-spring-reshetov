@@ -1,0 +1,36 @@
+server:
+  port: 8081
+spring:
+  output:
+    ansi:
+      enabled: always
+  cloud:
+    stream:
+      binders:
+        binderName:
+          type: kafka
+      bindings:
+        msgAuctionPublish:
+          destination: ${MSG_AUCTION:msgAuction} # Отправка сообщения со аукционным лотом
+  kafka:
+    bootstrap-servers: ${KAFKA_HOST:fmfaqsr.diasoft.ru}:${KAFKA_PORT:9092}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "metrics, health, logfile"
+  endpoint:
+    health:
+      show-details: always
+  health:
+    defaults:
+      enabled: true
+logging:
+  level:
+    root: info
+  file:
+    name: "app.log"
+blizzard:
+  host: https://eu.api.blizzard.com
+  token: {url: "https://eu.battle.net/oauth/token", id: "a2de4ab62565436a8151bc25878c4d86", secret: "3ExDIsCrB1Muf1I190S2fDHgne8hzQxr"}
+realm-ids: ${REALM_IDS:1605}
