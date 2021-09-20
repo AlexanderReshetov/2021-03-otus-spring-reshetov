@@ -12,7 +12,7 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("Сервис получения данных аукционов для отображения должен")
-public class AuctionForViewServiceImplTest {
+public class AuctionLotForViewServiceImplTest {
     @Mock
     private AuctionForViewRepository auctionForViewRepository;
     @InjectMocks

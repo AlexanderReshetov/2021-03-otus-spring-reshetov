@@ -4,7 +4,7 @@ import io.micrometer.core.annotation.Timed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-import ru.otus.main.domain.Auction;
+import ru.otus.main.domain.AuctionLot;
 import ru.otus.main.domain.Item;
 import ru.otus.main.domain.Realm;
 import ru.otus.main.service.AuctionService;
@@ -55,7 +55,7 @@ public class LoaderController {
 
     @Timed("REST_GET_AUCTIONS_BY_ID")
     @GetMapping("/load/auctions/{realmId}")
-    public ResponseEntity<List<Auction>> loadAuctionsByRealmId(@PathVariable("realmId") Long realmId) {
+    public ResponseEntity<List<AuctionLot>> loadAuctionsByRealmId(@PathVariable("realmId") Long realmId) {
         try {
             return ResponseEntity.ok(auctionService.loadAllAuctionsByRealmId(realmId));
         }

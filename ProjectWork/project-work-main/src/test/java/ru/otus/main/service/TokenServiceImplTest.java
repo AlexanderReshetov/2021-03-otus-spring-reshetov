@@ -6,7 +6,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestOperations;
 import ru.otus.main.domain.Token;
 import ru.otus.main.dto.ResponseTokenDto;
 import ru.otus.main.repository.TokenRepository;
@@ -15,15 +14,13 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("Сервис получения токенов должен")
 public class TokenServiceImplTest {
     @Mock
-    private RestOperations restOperations;
+    private RequestEntityService requestEntityService;
     @Mock
     private TokenRepository tokenRepository;
 
@@ -35,12 +32,11 @@ public class TokenServiceImplTest {
     @DisplayName("запросить токен из загрузчика")
     void shouldGetTokenFromLoader() {
         final TokenService tokenService = tokenService();
-        when(restOperations.exchange(any(), eq(ResponseTokenDto.class)))
+        when(requestEntityService.getResponseTokenDto())
                 .thenReturn(ResponseEntity.ok(new ResponseTokenDto(TOKEN, EXPIRATION_DT)));
 
         final Token token = tokenService.loadToken();
 
-        verify(restOperations).exchange(any(), eq(ResponseTokenDto.class));
         assertEquals(TOKEN, token.getToken());
         assertEquals(EXPIRATION_DT, token.getExpirationDt());
     }
@@ -62,8 +58,6 @@ public class TokenServiceImplTest {
     private TokenService tokenService() {
         return new TokenServiceImpl(
                 tokenRepository,
-                restOperations,
-                "host",
-                "port");
+                requestEntityService);
     }
 }

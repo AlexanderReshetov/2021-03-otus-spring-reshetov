@@ -2,7 +2,7 @@ package ru.otus.main.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.otus.main.domain.Auction;
+import ru.otus.main.domain.AuctionLot;
 import ru.otus.main.domain.Item;
 import ru.otus.main.dto.ItemAndTokenDto;
 
@@ -18,9 +18,9 @@ public class ItemLoaderServiceImpl implements ItemLoaderService {
         this.itemService = itemService;
     }
 
-    public void loadItemsByAuctions(List<Auction> auctionList) {
-        for (Auction auction : auctionList) {
-            getItemByIdFromBlizzard(auction.getItemBlizzardId());
+    public void loadItemsByAuctions(List<AuctionLot> auctionLotList) {
+        for (AuctionLot auctionLot : auctionLotList) {
+            getItemByIdFromBlizzard(auctionLot.getItemBlizzardId());
         }
     }
 

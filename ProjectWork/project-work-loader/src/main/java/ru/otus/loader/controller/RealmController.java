@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
+import ru.otus.loader.dto.BlizzardRealmDto;
 import ru.otus.loader.dto.ResponseRealmDto;
 import ru.otus.loader.service.LoadRealmsService;
 import ru.otus.loader.service.exception.RealmException;
@@ -26,7 +27,8 @@ public class RealmController {
     @Timed("REST_GET_ALL_REALMS")
     @GetMapping("/realms")
     public ResponseEntity<List<ResponseRealmDto>> getAllRealms(@RequestHeader("Authorization") String token) {
-        return ResponseEntity.ok(loadRealmsService.getAllRealms(token).getBlizzardRealmDtoList().stream().map(ResponseRealmDto::toDto).collect(Collectors.toList()));
+        final List<BlizzardRealmDto> realmDtoList = loadRealmsService.getAllRealms(token).getBlizzardRealmDtoList();
+        return ResponseEntity.ok(realmDtoList.stream().map(ResponseRealmDto::toDto).collect(Collectors.toList()));
     }
 
     @ExceptionHandler(RealmException.class)

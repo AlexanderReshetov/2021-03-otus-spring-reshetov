@@ -13,7 +13,7 @@ import ru.otus.loader.service.AuctionService;
 @EnableScheduling
 @ConditionalOnProperty(prefix = "schedule", value = "enabled", havingValue = "true", matchIfMissing = true)
 public class ScheduleConfig {
-    private AuctionService auctionService;
+    private final AuctionService auctionService;
 
     @Autowired
     public ScheduleConfig(AuctionService auctionService) {

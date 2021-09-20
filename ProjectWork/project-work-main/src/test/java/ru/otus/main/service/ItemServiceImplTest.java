@@ -14,6 +14,7 @@ import ru.otus.main.dto.ResponseItemDto;
 import ru.otus.main.repository.ItemRepository;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -27,7 +28,7 @@ public class ItemServiceImplTest {
     @Mock
     private TokenService tokenService;
     @Mock
-    private RestOperations restOperations;
+    private RequestEntityService requestEntityService;
     @Mock
     private ItemRepository itemRepository;
 
@@ -42,13 +43,12 @@ public class ItemServiceImplTest {
     void shouldGetItemFromLoaderByBlizzardId() {
         final ItemService itemService = itemService();
         when(tokenService.getToken()).thenReturn(new Token(null, TOKEN, LOCAL_DATE_TIME));
-        when(restOperations.exchange(any(), eq(ResponseItemDto.class)))
+        when(requestEntityService.getResponseItemDto(TOKEN, BLIZZARD_ITEM_ID))
                 .thenReturn(ResponseEntity.ok(new ResponseItemDto(BLIZZARD_ITEM_ID, EN_NAME, RU_NAME)));
 
         Item item = itemService.loadItemById(BLIZZARD_ITEM_ID);
 
         verify(tokenService).getToken();
-        verify(restOperations).exchange(any(), eq(ResponseItemDto.class));
         assertEquals(BLIZZARD_ITEM_ID, item.getBlizzardId());
         assertEquals(EN_NAME, item.getEnName());
         assertEquals(RU_NAME, item.getRuName());
@@ -58,12 +58,11 @@ public class ItemServiceImplTest {
     @DisplayName("запросить предмет из загрузчика по Blizzard ИД и токену")
     void shouldGetItemFromLoaderByBlizzardIdAndToken() {
         final ItemService itemService = itemService();
-        when(restOperations.exchange(any(), eq(ResponseItemDto.class)))
+        when(requestEntityService.getResponseItemDto(TOKEN, BLIZZARD_ITEM_ID))
                 .thenReturn(ResponseEntity.ok(new ResponseItemDto(BLIZZARD_ITEM_ID, EN_NAME, RU_NAME)));
 
         Item item = itemService.loadItemById(TOKEN, BLIZZARD_ITEM_ID);
 
-        verify(restOperations).exchange(any(), eq(ResponseItemDto.class));
         assertEquals(BLIZZARD_ITEM_ID, item.getBlizzardId());
         assertEquals(EN_NAME, item.getEnName());
         assertEquals(RU_NAME, item.getRuName());
@@ -74,15 +73,13 @@ public class ItemServiceImplTest {
     void shouldGetItemAndTokenFromLoaderByBlizzardId() {
         final ItemService itemService = itemService();
         when(tokenService.getToken()).thenReturn(new Token(null, TOKEN, LOCAL_DATE_TIME));
-        when(restOperations.exchange(any(), eq(ResponseItemDto.class)))
+        when(requestEntityService.getResponseItemDto(TOKEN, BLIZZARD_ITEM_ID))
                 .thenReturn(ResponseEntity.ok(new ResponseItemDto(BLIZZARD_ITEM_ID, EN_NAME, RU_NAME)));
 
         ItemAndTokenDto itemAndTokenDto = itemService.loadItemWithTokenById(BLIZZARD_ITEM_ID);
 
         verify(tokenService).getToken();
-        verify(restOperations).exchange(any(), eq(ResponseItemDto.class));
         assertEquals(TOKEN, itemAndTokenDto.getToken().getToken());
-        assertEquals(LOCAL_DATE_TIME, itemAndTokenDto.getToken().getExpirationDt());
         assertEquals(BLIZZARD_ITEM_ID, itemAndTokenDto.getItem().getBlizzardId());
         assertEquals(EN_NAME, itemAndTokenDto.getItem().getEnName());
         assertEquals(RU_NAME, itemAndTokenDto.getItem().getRuName());
@@ -91,9 +88,7 @@ public class ItemServiceImplTest {
     private ItemService itemService() {
         return new ItemServiceImpl(
                 tokenService,
-                restOperations,
-                "host",
-                "port",
+                requestEntityService,
                 itemRepository);
     }
 }

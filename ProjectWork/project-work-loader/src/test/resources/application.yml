@@ -24,6 +24,4 @@ schedule:
   enable: false
 blizzard:
   host: https://eu.api.blizzard.com
-  token-url: https://eu.api.blizzard.com/oauth/token
-  client-id: a2de4ab62565436a8151bc25878c4d86
-  client-secret: 3ExDIsCrB1Muf1I190S2fDHgne8hzQxr
+  token: {url: "https://eu.battle.net/oauth/token", id: "a2de4ab62565436a8151bc25878c4d86", secret: "3ExDIsCrB1Muf1I190S2fDHgne8hzQxr"}

@@ -1,7 +1,7 @@
 package ru.otus.main.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import ru.otus.main.domain.Auction;
+import ru.otus.main.domain.AuctionLot;
 
 import java.time.LocalDateTime;
 
@@ -52,8 +52,8 @@ public class ResponseAuctionDto {
         return localDateTime;
     }
 
-    public static Auction toDomain(ResponseAuctionDto responseAuctionDto) {
-        return new Auction(
+    public static AuctionLot toDomain(ResponseAuctionDto responseAuctionDto) {
+        return new AuctionLot(
                 null,
                 responseAuctionDto.getId(),
                 responseAuctionDto.getRealmId(),

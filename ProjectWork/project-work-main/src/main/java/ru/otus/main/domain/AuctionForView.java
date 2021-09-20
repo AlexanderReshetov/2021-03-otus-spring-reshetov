@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@NamedEntityGraph(name = "AuctionForView.fields", attributeNodes = {@NamedAttributeNode("item")})
+@NamedEntityGraph(name = "AuctionForView.fields", attributeNodes = {@NamedAttributeNode("realm"), @NamedAttributeNode("item")})
 @Table(name = "auction")
 public class AuctionForView {
     @Id
@@ -12,8 +12,9 @@ public class AuctionForView {
     private Long id;
     @Column(name = "blizzard_id")
     private Long blizzardId;
-    @Column(name = "realm_id")
-    private Long realmId;
+    @ManyToOne(targetEntity = Realm.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "realm_id", referencedColumnName = "id")
+    private Realm realm;
     @ManyToOne(targetEntity = Item.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "item_blizzard_id", referencedColumnName = "blizzard_id")
     private Item item;
@@ -27,10 +28,10 @@ public class AuctionForView {
     public AuctionForView() {
     }
 
-    public AuctionForView(Long id, Long blizzardId, Long realmId, Item item, Long price, Long quantity, LocalDateTime localDateTime) {
+    public AuctionForView(Long id, Long blizzardId, Realm realm, Item item, Long price, Long quantity, LocalDateTime localDateTime) {
         this.id = id;
         this.blizzardId = blizzardId;
-        this.realmId = realmId;
+        this.realm = realm;
         this.item = item;
         this.price = price;
         this.quantity = quantity;
@@ -45,8 +46,8 @@ public class AuctionForView {
         return blizzardId;
     }
 
-    public Long getRealmId() {
-        return realmId;
+    public Realm getRealm() {
+        return realm;
     }
 
     public Item getItem() {

@@ -5,8 +5,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestOperations;
+import ru.otus.loader.config.BlizzardSettings;
 import ru.otus.loader.dto.BlizzardTokenDto;
 import ru.otus.loader.service.exception.AuthenticationException;
 
@@ -21,6 +23,8 @@ import static org.mockito.Mockito.when;
 public class GetTokenServiceImplTest {
     @Mock
     private RestOperations restOperations;
+    @Autowired
+    private BlizzardSettings blizzardSettings;
 
     @Test
     @DisplayName("вернуть токен")
@@ -46,6 +50,6 @@ public class GetTokenServiceImplTest {
     }
 
     private GetTokenService getTokenService() {
-        return new GetTokenServiceImpl(restOperations, "https://eu.api.blizzard.com/oauth/token", "client_id", "client_secret");
+        return new GetTokenServiceImpl(restOperations, blizzardSettings);
     }
 }

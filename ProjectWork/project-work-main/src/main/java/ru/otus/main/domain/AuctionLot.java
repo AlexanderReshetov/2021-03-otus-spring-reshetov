@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "auction")
-public class Auction {
+public class AuctionLot {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,10 +22,10 @@ public class Auction {
     @Column(name = "local_datetime")
     private LocalDateTime localDateTime;
 
-    public Auction() {
+    public AuctionLot() {
     }
 
-    public Auction(Long id, Long blizzardId, Long realmId, Long itemBlizzardId, Long price, Long quantity, LocalDateTime localDateTime) {
+    public AuctionLot(Long id, Long blizzardId, Long realmId, Long itemBlizzardId, Long price, Long quantity, LocalDateTime localDateTime) {
         this.id = id;
         this.blizzardId = blizzardId;
         this.realmId = realmId;

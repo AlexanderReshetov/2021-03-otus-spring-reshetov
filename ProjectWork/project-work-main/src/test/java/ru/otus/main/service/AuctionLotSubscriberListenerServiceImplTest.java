@@ -14,7 +14,7 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("Сервис обработки сообщений кафки с лотами аукционов должен")
-public class AuctionSubscriberListenerServiceImplTest {
+public class AuctionLotSubscriberListenerServiceImplTest {
     @Mock
     private AuctionService auctionService;
     @InjectMocks

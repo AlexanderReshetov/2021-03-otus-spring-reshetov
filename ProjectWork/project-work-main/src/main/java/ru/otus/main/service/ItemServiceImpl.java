@@ -1,14 +1,9 @@
 package ru.otus.main.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestOperations;
 import ru.otus.main.domain.Item;
 import ru.otus.main.domain.Token;
 import ru.otus.main.dto.ItemAndTokenDto;
@@ -17,27 +12,18 @@ import ru.otus.main.repository.ItemRepository;
 import ru.otus.main.service.exception.ItemException;
 import ru.otus.main.service.exception.TokenException;
 
-import java.util.Collections;
 import java.util.Optional;
 
 @Service
 public class ItemServiceImpl implements ItemService {
     private final TokenService tokenService;
-    private final RestOperations restOperations;
-    private final String host;
-    private final String port;
+    private final RequestEntityService requestEntityService;
     private final ItemRepository itemRepository;
 
     @Autowired
-    public ItemServiceImpl(TokenService tokenService,
-                           RestOperations restOperations,
-                           @Value("${loader-service.host}") String host,
-                           @Value("${loader-service.port}") String port,
-                           ItemRepository itemRepository) {
+    public ItemServiceImpl(TokenService tokenService, RequestEntityService requestEntityService, ItemRepository itemRepository) {
         this.tokenService = tokenService;
-        this.restOperations = restOperations;
-        this.host = host;
-        this.port = port;
+        this.requestEntityService = requestEntityService;
         this.itemRepository = itemRepository;
     }
 
@@ -70,14 +56,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     private Item getItemByIdFromBlizzard(String token, Long id) {
-        final HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.put("Authorization", Collections.singletonList(token));
-        final RequestEntity<?> requestEntity = RequestEntity
-                .get("http://" + host + ":" + port + "/items/" + id)
-                .headers(headers)
-                .build();
-        ResponseEntity<ResponseItemDto> responseEntity = restOperations.exchange(requestEntity, ResponseItemDto.class);
+        ResponseEntity<ResponseItemDto> responseEntity = requestEntityService.getResponseItemDto(token, id);
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
             Item item = ResponseItemDto.toDomain(responseEntity.getBody());
             return updateItemInRepository(item);

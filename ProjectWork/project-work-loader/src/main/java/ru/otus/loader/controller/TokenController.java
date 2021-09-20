@@ -19,7 +19,7 @@ public class TokenController {
     }
 
     @GetMapping("/token")
-    ResponseEntity<ResponseTokenDto> getToken() {
+    public ResponseEntity<ResponseTokenDto> getToken() {
         return ResponseEntity.ok(ResponseTokenDto.toDto(getTokenService.getToken()));
     }
 

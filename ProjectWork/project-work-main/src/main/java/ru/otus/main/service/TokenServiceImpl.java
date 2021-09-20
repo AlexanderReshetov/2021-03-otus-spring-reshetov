@@ -19,19 +19,13 @@ import java.time.LocalDateTime;
 @Service
 public class TokenServiceImpl implements TokenService {
     private final TokenRepository tokenRepository;
-    private final RestOperations restOperations;
-    private final String host;
-    private final String port;
+    private final RequestEntityService requestEntityService;
 
     @Autowired
     public TokenServiceImpl(TokenRepository tokenRepository,
-                            RestOperations restOperations,
-                            @Value("${loader-service.host}") String host,
-                            @Value("${loader-service.port}") String port) {
+                            RequestEntityService requestEntityService) {
         this.tokenRepository = tokenRepository;
-        this.restOperations = restOperations;
-        this.host = host;
-        this.port = port;
+        this.requestEntityService = requestEntityService;
     }
 
     public Token loadToken() {
@@ -74,12 +68,6 @@ public class TokenServiceImpl implements TokenService {
     }
 
     private ResponseEntity<ResponseTokenDto> getTokenFromBlizzard() {
-        final HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        final RequestEntity<?> requestEntity = RequestEntity
-                .get("http://" + host + ":" + port + "/token")
-                .headers(headers)
-                .build();
-        return restOperations.exchange(requestEntity, ResponseTokenDto.class);
+        return requestEntityService.getResponseTokenDto();
     }
 }

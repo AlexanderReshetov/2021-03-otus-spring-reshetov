@@ -2,7 +2,6 @@ package ru.otus.loader.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.otus.loader.dto.BlizzardAuctionDto;
 import ru.otus.loader.dto.ResponseAuctionDto;
@@ -33,16 +32,15 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     public void sendAuctions() {
-        LocalDateTime localDateTime = LocalDateTime.now();
+        final LocalDateTime localDateTime = LocalDateTime.now();
         final String token = ResponseTokenDto.toDto(getTokenService.getToken()).getToken();
-        for (Long realmId: realmIdList) {
-            final ResponseEntity<List<ResponseAuctionDto>> responseEntity = ResponseEntity.ok(loadAuctionsService.getAllAuctionsByRealmId(token, realmId).getBlizzardAuctionDtoList().stream().map((BlizzardAuctionDto blizzardAuctionDto) -> {
+        for (Long realmId : realmIdList) {
+            final List<BlizzardAuctionDto> blizzardAuctionDtoList = loadAuctionsService.getAllAuctionsByRealmId(token, realmId).getBlizzardAuctionDtoList();
+            final List<ResponseAuctionDto> responseAuctionDtoList = blizzardAuctionDtoList.stream().map((BlizzardAuctionDto blizzardAuctionDto) -> {
                 return ResponseAuctionDto.toDto(blizzardAuctionDto, realmId, localDateTime);
-            }).collect(Collectors.toList()));
-            if (responseEntity.getStatusCode().is2xxSuccessful()) {
-                for (ResponseAuctionDto responseAuctionDto : responseEntity.getBody()) {
-                    auctionPublishGateway.auctionPublish(responseAuctionDto);
-                }
+            }).collect(Collectors.toList());
+            for (ResponseAuctionDto responseAuctionDto : responseAuctionDtoList) {
+                auctionPublishGateway.auctionPublish(responseAuctionDto);
             }
         }
     }
